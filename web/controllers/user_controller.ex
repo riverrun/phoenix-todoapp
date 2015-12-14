@@ -17,10 +17,7 @@ defmodule TodoApp.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    create_new(conn, Comeonin.create_user(user_params))
-  end
-  def create_new(conn, {:ok, user_params}) do
-    changeset = User.changeset(%User{}, user_params)
+    changeset = User.auth_changeset(%User{}, user_params)
 
     case Repo.insert(changeset) do
       {:ok, user} ->
@@ -33,9 +30,6 @@ defmodule TodoApp.UserController do
         |> put_status(:unprocessable_entity)
         |> render(TodoApp.ChangesetView, "error.json", changeset: changeset)
     end
-  end
-  def create_new(conn, {:error, message}) do
-    render(conn, TodoApp.ErrorView, "error.json", %{error: message})
   end
 
   def delete(conn, %{"id" => id}) do

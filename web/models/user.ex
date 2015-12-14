@@ -4,14 +4,12 @@ defmodule TodoApp.User do
   schema "users" do
     field :name, :string
     field :role, :string
+    field :password, :string, virtual: true
     field :password_hash, :string
     has_many :todos, TodoApp.Todo
 
     timestamps
   end
-
-  @required_fields ~w(name role password_hash)
-  @optional_fields ~w()
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -21,8 +19,25 @@ defmodule TodoApp.User do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, ~w(name role), [])
     |> validate_length(:name, min: 1, max: 100)
     |> unique_constraint(:name)
+  end
+
+  def auth_changeset(model, params) do
+    model
+    |> changeset(params)
+    |> cast(params, ~w(password), [])
+    |> validate_length(:password, min: 8, max: 80)
+    |> put_pass_hash()
+  end
+
+  defp put_pass_hash(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
+        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
+      _ ->
+        changeset
+    end
   end
 end

@@ -3,12 +3,13 @@ defmodule ConnCase.Helper do
   import Comeonin.Bcrypt
   import Ecto.Model
   alias TodoApp.Repo
+  alias TodoApp.Todo
   alias TodoApp.User
 
   @users [
-    %{id: 1, name: "Gladys", role: "user", password_hash: hashpwsalt("mangoes")},
-    %{id: 2, name: "Fred", role: "user", password_hash: hashpwsalt("mangoes")},
-    %{id: 3, name: "Tony", role: "user", password_hash: hashpwsalt("mangoes")}
+    %{id: 1, name: "Gladys", role: "user", password: "mangoes&gooseberries"},
+    %{id: 2, name: "Fred", role: "user", password: "mangoes&gooseberries"},
+    %{id: 3, name: "Tony", role: "user", password: "mangoes&gooseberries"}
   ]
   @todos [
     %{id: 1, title: "Feed pet", notes: "Attempted, but not finished",
@@ -21,7 +22,7 @@ defmodule ConnCase.Helper do
 
   def add_users do
     for user <- @users do
-      %User{} |> Map.merge(user) |> Repo.insert!
+      %User{} |> User.auth_changeset(user) |> Repo.insert!
     end
   end
 
@@ -33,7 +34,7 @@ defmodule ConnCase.Helper do
   end
 
   def add_todo(user, todo) do
-    user |> build(:todos, todo) |> Repo.insert!
+    user |> build(:todos) |> Todo.changeset(todo) |> Repo.insert!
   end
 
 end
