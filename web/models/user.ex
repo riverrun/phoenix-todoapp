@@ -22,6 +22,7 @@ defmodule TodoApp.User do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> unique_constraint(:name, on: Repo)
+    |> validate_length(:name, min: 1, max: 100)
+    |> unique_constraint(:name)
   end
 end

@@ -19,6 +19,6 @@ config :todo_app, TodoApp.Repo,
   pool: Ecto.Adapters.SQL.Sandbox
 
 # Openmaize authentication library configuration
-#config :openmaize,
-#user_model: TodoApp.User,
-#repo: TodoApp.Repo
+config :openmaize,
+  user_model: TodoApp.User,
+  repo: TodoApp.Repo

@@ -4,10 +4,11 @@ defmodule TodoApp.TodoController do
   alias TodoApp.Todo
   alias TodoApp.User
 
-  plug :scrub_params, "todo" when action in [:create, :update]
-
+  def action(%Plug.Conn{assigns: %{current_user: nil}} = conn, _) do
+    render(conn, TodoApp.ErrorView, "401.json", [])
+  end
   def action(%Plug.Conn{params: params, assigns: %{current_user: current_user}} = conn, _) do
-    apply(__MODULE__, action_name(conn), [conn, params, get_user_model(current_user)])
+    apply(__MODULE__, action_name(conn), [conn, params, Repo.get(User, current_user.id)])
   end
 
   def index(conn, _params, user) do
@@ -32,12 +33,12 @@ defmodule TodoApp.TodoController do
   end
 
   def show(conn, %{"id" => id}, user) do
-    todo = Repo.get!(user_todos(user), id)
+    todo = Repo.get(user_todos(user), id)
     render(conn, "show.json", todo: todo)
   end
 
   def update(conn, %{"id" => id, "todo" => todo_params}, user) do
-    todo = Repo.get!(user_todos(user), id)
+    todo = Repo.get(user_todos(user), id)
     changeset = Todo.changeset(todo, todo_params)
 
     case Repo.update(changeset) do
@@ -51,14 +52,10 @@ defmodule TodoApp.TodoController do
   end
 
   def delete(conn, %{"id" => id}, user) do
-    todo = Repo.get!(user_todos(user), id)
+    todo = Repo.get(user_todos(user), id)
     Repo.delete!(todo)
 
     send_resp(conn, :no_content, "")
-  end
-
-  defp get_user_model(current_user) do
-    Repo.get(User, current_user.id)
   end
 
   defp user_todos(user) do

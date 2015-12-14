@@ -4,11 +4,15 @@ defmodule TodoApp.UserController do
   import Openmaize.AccessControl
   alias TodoApp.User
 
-  plug :scrub_params, "user" when action in [:create, :update]
-  plug :authorize_id, [redirects: false] when action in [:show, :delete]
+  plug :authorize_id, [redirects: false] when action in [:delete]
+
+  def index(conn, _params) do
+    users = Repo.all(User)
+    render(conn, "index.json", users: users)
+  end
 
   def show(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user = Repo.get(User, id)
     render(conn, "show.json", user: user)
   end
 
@@ -31,11 +35,11 @@ defmodule TodoApp.UserController do
     end
   end
   def create_new(conn, {:error, message}) do
-    render(conn, TodoApp.ErrorView, "404.json", [])
+    render(conn, TodoApp.ErrorView, "error.json", %{error: message})
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Repo.get!(User, id)
+    user = Repo.get(User, id)
     Repo.delete!(user)
 
     send_resp(conn, :no_content, "")
