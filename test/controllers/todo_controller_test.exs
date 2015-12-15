@@ -9,12 +9,13 @@ defmodule TodoApp.TodoControllerTest do
                  title: "Search for meaning"}
   @invalid_attrs %{result: "satisfactory"}
 
+  {:ok, user_token} = %{id: 1, name: "Gladys", role: "user"} |> generate_token({0, 86400})
+  @user_token user_token
+
   setup do
-    {:ok, user_token} = %{id: 1, name: "Gladys", role: "user"}
-    |> generate_token({-100, 86400})
     conn = conn()
     |> put_req_header("accept", "application/json")
-    |> put_req_header("authorization", "Bearer #{user_token}")
+    |> put_req_header("authorization", "Bearer #{@user_token}")
     {:ok, conn: conn}
   end
 
