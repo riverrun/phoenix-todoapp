@@ -3,6 +3,7 @@ defmodule TodoApp.TodoControllerTest do
 
   import Openmaize.Token.Create
   alias TodoApp.Todo
+  alias TodoApp.User
 
   @valid_attrs %{body: "Need to find the meaning of life",
                  notes: "Have to finish by next Wednesday",
@@ -11,6 +12,7 @@ defmodule TodoApp.TodoControllerTest do
 
   {:ok, user_token} = %{id: 1, name: "Gladys", role: "user"} |> generate_token({0, 86400})
   @user_token user_token
+  @user Repo.get(User, 1)
 
   setup do
     conn = conn()
@@ -20,13 +22,13 @@ defmodule TodoApp.TodoControllerTest do
   end
 
   test "lists all entries on index", %{conn: conn} do
-    conn = get conn, todo_path(conn, :index)
+    conn = get conn, user_todo_path(conn, :index, @user)
     assert json_response(conn, 200)["data"] |> length == 2
   end
 
   test "shows chosen todo if it belongs to current_user", %{conn: conn} do
     todo = Repo.get(Todo, 1)
-    conn = get conn, todo_path(conn, :show, todo)
+    conn = get conn, user_todo_path(conn, :show, @user, todo)
     assert json_response(conn, 200)["data"] == %{"id" => todo.id,
       "user_id" => todo.user_id,
       "title" => todo.title,
@@ -34,38 +36,43 @@ defmodule TodoApp.TodoControllerTest do
       "body" => todo.body}
   end
 
+  test "returns nil when todo does not belong to current_user", %{conn: conn} do
+    conn = get conn, user_todo_path(conn, :show, @user, 3)
+    assert json_response(conn, 200)["data"] == nil
+  end
+
   test "returns nil when id is nonexistent", %{conn: conn} do
-    conn = get conn, todo_path(conn, :show, 10)
+    conn = get conn, user_todo_path(conn, :show, @user, 10)
     assert json_response(conn, 200)["data"] == nil
   end
 
   test "creates and renders todo when data is valid", %{conn: conn} do
-    conn = post conn, todo_path(conn, :create), todo: @valid_attrs
+    conn = post conn, user_todo_path(conn, :create, @user), todo: @valid_attrs
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Todo, @valid_attrs)
   end
 
   test "does not create todo and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, todo_path(conn, :create), todo: @invalid_attrs
+    conn = post conn, user_todo_path(conn, :create, @user), todo: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end
 
   test "updates and renders chosen todo when data is valid", %{conn: conn} do
     todo = Repo.get(Todo, 1)
-    conn = put conn, todo_path(conn, :update, todo), todo: %{notes: "Done"}
+    conn = put conn, user_todo_path(conn, :update, @user, todo), todo: %{notes: "Done"}
     assert json_response(conn, 200)["data"]["id"]
     assert Repo.get_by(Todo, %{title: "Feed pet"})
   end
 
-  test "does not update chosen todo and renders errors when data is invalid", %{conn: conn} do
+  test "does not update chosen todo when data is invalid", %{conn: conn} do
     todo = Repo.get(Todo, 2)
-    conn = put conn, todo_path(conn, :update, todo), todo: @invalid_attrs
+    conn = put conn, user_todo_path(conn, :update, @user, todo), todo: @invalid_attrs
     assert json_response(conn, 200)["data"]["title"] == "Greet wife"
   end
 
   test "deletes chosen todo", %{conn: conn} do
     todo = Repo.get(Todo, 2)
-    conn = delete conn, todo_path(conn, :delete, todo)
+    conn = delete conn, user_todo_path(conn, :delete, @user, todo)
     assert response(conn, 204)
     refute Repo.get(Todo, todo.id)
   end

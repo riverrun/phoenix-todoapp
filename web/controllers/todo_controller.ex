@@ -23,7 +23,7 @@ defmodule TodoApp.TodoController do
       {:ok, todo} ->
         conn
         |> put_status(:created)
-        |> put_resp_header("location", todo_path(conn, :show, todo))
+        |> put_resp_header("location", user_todo_path(conn, :show, user, todo))
         |> render("show.json", todo: todo)
       {:error, changeset} ->
         conn
