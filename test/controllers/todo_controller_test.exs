@@ -36,9 +36,17 @@ defmodule TodoApp.TodoControllerTest do
       "body" => todo.body}
   end
 
-  test "returns nil when todo does not belong to current_user", %{conn: conn} do
-    conn = get conn, user_todo_path(conn, :show, @user, 3)
-    assert json_response(conn, 200)["data"] == nil
+  test "returns errors when current_user is nil" do
+    todo = Repo.get(Todo, 1)
+    conn = conn()
+    |> put_req_header("accept", "application/json")
+    |> get(user_todo_path(conn, :show, @user, todo))
+    assert json_response(conn, 200)["errors"] != %{}
+  end
+
+  test "returns errors when todo does not belong to current_user", %{conn: conn} do
+    conn = get conn, user_todo_path(conn, :show, Repo.get(User, 2), 3)
+    assert json_response(conn, 200)["errors"] != %{}
   end
 
   test "returns nil when id is nonexistent", %{conn: conn} do
@@ -46,18 +54,18 @@ defmodule TodoApp.TodoControllerTest do
     assert json_response(conn, 200)["data"] == nil
   end
 
-  test "creates and renders todo when data is valid", %{conn: conn} do
+  test "creates and returns todo when data is valid", %{conn: conn} do
     conn = post conn, user_todo_path(conn, :create, @user), todo: @valid_attrs
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Todo, @valid_attrs)
   end
 
-  test "does not create todo and renders errors when data is invalid", %{conn: conn} do
+  test "does not create todo and returns errors when data is invalid", %{conn: conn} do
     conn = post conn, user_todo_path(conn, :create, @user), todo: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end
 
-  test "updates and renders chosen todo when data is valid", %{conn: conn} do
+  test "updates and returns chosen todo when data is valid", %{conn: conn} do
     todo = Repo.get(Todo, 1)
     conn = put conn, user_todo_path(conn, :update, @user, todo), todo: %{notes: "Done"}
     assert json_response(conn, 200)["data"]["id"]

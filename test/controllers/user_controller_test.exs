@@ -35,13 +35,13 @@ defmodule TodoApp.UserControllerTest do
     assert json_response(conn, 200)["data"] == nil
   end
 
-  test "creates and renders user when data is valid", %{conn: conn} do
+  test "creates and returns user when data is valid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @valid_attrs
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(User, %{name: "Bill"})
   end
 
-  test "does not create user and renders errors when data is invalid", %{conn: conn} do
+  test "does not create user and returns errors when data is invalid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end

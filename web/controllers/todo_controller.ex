@@ -7,8 +7,13 @@ defmodule TodoApp.TodoController do
   def action(%Plug.Conn{assigns: %{current_user: nil}} = conn, _) do
     render(conn, TodoApp.ErrorView, "401.json", [])
   end
-  def action(%Plug.Conn{params: params, assigns: %{current_user: current_user}} = conn, _) do
-    apply(__MODULE__, action_name(conn), [conn, params, Repo.get(User, current_user.id)])
+  def action(%Plug.Conn{params: %{"user_id" => user_id} = params,
+                        assigns: %{current_user: current_user}} = conn, _) do
+    if user_id == to_string(current_user.id) do
+      apply(__MODULE__, action_name(conn), [conn, params, Repo.get(User, current_user.id)])
+    else
+      render(conn, TodoApp.ErrorView, "403.json", [])
+    end
   end
 
   def index(conn, _params, user) do
