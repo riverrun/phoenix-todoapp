@@ -8,7 +8,7 @@ defmodule TodoApp.TodoControllerTest do
   @valid_attrs %{body: "Need to find the meaning of life",
                  notes: "Have to finish by next Wednesday",
                  title: "Search for meaning"}
-  @invalid_attrs %{result: "satisfactory"}
+  @invalid_attrs %{title: "Whatever", result: "satisfactory"}
 
   {:ok, user_token} = %{id: 1, name: "Gladys", role: "user"} |> generate_token({0, 86400})
   @user_token user_token
@@ -41,12 +41,12 @@ defmodule TodoApp.TodoControllerTest do
     conn = conn()
     |> put_req_header("accept", "application/json")
     |> get(user_todo_path(conn, :show, @user, todo))
-    assert json_response(conn, 200)["errors"] != %{}
+    assert json_response(conn, 200)["errors"]["detail"] =~ "have to login"
   end
 
   test "returns errors when todo does not belong to current_user", %{conn: conn} do
     conn = get conn, user_todo_path(conn, :show, Repo.get(User, 2), 3)
-    assert json_response(conn, 200)["errors"] != %{}
+    assert json_response(conn, 200)["errors"]["detail"] =~ "not allowed to access"
   end
 
   test "returns nil when id is nonexistent", %{conn: conn} do
@@ -62,7 +62,7 @@ defmodule TodoApp.TodoControllerTest do
 
   test "does not create todo and returns errors when data is invalid", %{conn: conn} do
     conn = post conn, user_todo_path(conn, :create, @user), todo: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
+    assert json_response(conn, 422)["errors"]["body"] == ["can't be blank"]
   end
 
   test "updates and returns chosen todo when data is valid", %{conn: conn} do
@@ -75,7 +75,8 @@ defmodule TodoApp.TodoControllerTest do
   test "does not update chosen todo when data is invalid", %{conn: conn} do
     todo = Repo.get(Todo, 2)
     conn = put conn, user_todo_path(conn, :update, @user, todo), todo: @invalid_attrs
-    assert json_response(conn, 200)["data"]["title"] == "Greet wife"
+    refute json_response(conn, 200)["data"]["result"]
+    assert json_response(conn, 200)["data"]["title"] == "Whatever"
   end
 
   test "deletes chosen todo", %{conn: conn} do

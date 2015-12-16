@@ -5,7 +5,7 @@ defmodule TodoApp.UserControllerTest do
   alias TodoApp.User
 
   @valid_attrs %{name: "Bill", password: "^hEsdg*F899", role: "user"}
-  @invalid_attrs %{name: "Albert", email: "whatever@mail.com", password: "password"}
+  @invalid_attrs %{name: "Albert", password: "password"}
 
   {:ok, user_token} = %{id: 3, name: "Tony", role: "user"} |> generate_token({0, 86400})
   @user_token user_token
@@ -43,7 +43,7 @@ defmodule TodoApp.UserControllerTest do
 
   test "does not create user and returns errors when data is invalid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @invalid_attrs
-    assert json_response(conn, 422)["errors"] != %{}
+    assert json_response(conn, 422)["errors"]["role"] == ["can't be blank"]
   end
 
   test "deletes user if user is current_user", %{conn: conn} do
