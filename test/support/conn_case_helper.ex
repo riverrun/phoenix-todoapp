@@ -1,7 +1,6 @@
 defmodule ConnCase.Helper do
 
-  import Comeonin.Bcrypt
-  import Ecto.Model
+  import Ecto
   alias TodoApp.Repo
   alias TodoApp.Todo
   alias TodoApp.User
@@ -34,7 +33,7 @@ defmodule ConnCase.Helper do
   end
 
   def add_todo(user, todo) do
-    user |> build(:todos) |> Todo.changeset(todo) |> Repo.insert!
+    user |> build_assoc(:todos) |> Todo.changeset(todo) |> Repo.insert!
   end
 
 end

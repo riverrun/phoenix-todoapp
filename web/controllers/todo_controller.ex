@@ -22,7 +22,7 @@ defmodule TodoApp.TodoController do
   end
 
   def create(conn, %{"todo" => todo_params}, user) do
-    changeset = user |> build(:todos) |> Todo.changeset(todo_params)
+    changeset = user |> build_assoc(:todos) |> Todo.changeset(todo_params)
 
     case Repo.insert(changeset) do
       {:ok, todo} ->

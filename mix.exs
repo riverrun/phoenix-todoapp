@@ -3,7 +3,7 @@ defmodule TodoApp.Mixfile do
 
   def project do
     [app: :todo_app,
-     version: "0.0.1",
+     version: "0.1.0",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix] ++ Mix.compilers,
@@ -16,17 +16,17 @@ defmodule TodoApp.Mixfile do
   def application do
     [mod: {TodoApp, []},
      applications: [:phoenix, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :openmaize]]
+                    :phoenix_ecto, :postgrex, :comeonin, :openmaize]]
   end
 
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
   defp elixirc_paths(_),     do: ["lib", "web"]
 
-  # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.0.4"},
-     {:phoenix_ecto, "~> 1.1"},
+    [{:phoenix, "~> 1.1"},
+     {:phoenix_ecto, "~> 2.0"},
      {:postgrex, ">= 0.0.0"},
+     {:comeonin, "~> 2.0"},
      {:openmaize, git: "https://github.com/elixircnx/openmaize.git", branch: "develop"},
      {:cowboy, "~> 1.0"}]
   end

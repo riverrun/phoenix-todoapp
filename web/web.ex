@@ -18,8 +18,9 @@ defmodule TodoApp.Web do
 
   def model do
     quote do
-      use Ecto.Model
+      use Ecto.Schema
 
+      import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
     end
@@ -30,7 +31,7 @@ defmodule TodoApp.Web do
       use Phoenix.Controller
 
       alias TodoApp.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
 
       import TodoApp.Router.Helpers
@@ -59,7 +60,7 @@ defmodule TodoApp.Web do
       use Phoenix.Channel
 
       alias TodoApp.Repo
-      import Ecto.Model
+      import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
     end
   end
