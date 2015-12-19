@@ -1,6 +1,8 @@
 defmodule TodoApp.User do
   use TodoApp.Web, :model
 
+  alias Openmaize.Signup
+
   schema "users" do
     field :name, :string
     field :role, :string
@@ -27,17 +29,6 @@ defmodule TodoApp.User do
   def auth_changeset(model, params) do
     model
     |> changeset(params)
-    |> cast(params, ~w(password), [])
-    |> validate_length(:password, min: 8, max: 80)
-    |> put_pass_hash()
-  end
-
-  defp put_pass_hash(changeset) do
-    case changeset do
-      %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
-        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
-      _ ->
-        changeset
-    end
+    |> Signup.create_user(params)
   end
 end
