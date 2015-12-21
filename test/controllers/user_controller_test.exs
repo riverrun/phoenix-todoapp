@@ -48,16 +48,14 @@ defmodule TodoApp.UserControllerTest do
 
   test "deletes user if user is current_user", %{conn: conn} do
     user = Repo.get(User, 3)
-    conn = conn
-    |> delete(user_path(conn, :delete, user))
+    conn = conn |> delete(user_path(conn, :delete, user))
     assert response(conn, 204)
     refute Repo.get(User, user.id)
   end
 
   test "does not delete user if user is not current_user", %{conn: conn} do
     user = Repo.get(User, 1)
-    conn = conn
-    |> delete(user_path(conn, :delete, user))
+    conn = conn |> delete(user_path(conn, :delete, user))
     assert response(conn, 403)
     assert Repo.get(User, user.id)
   end
