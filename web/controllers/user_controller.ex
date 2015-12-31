@@ -4,6 +4,7 @@ defmodule TodoApp.UserController do
   import Openmaize.AccessControl
   alias TodoApp.User
 
+  plug Openmaize.Login, [storage: nil] when action in [:login]
   plug :authorize_id, [redirects: false] when action in [:delete]
 
   def index(conn, _params) do

@@ -3,8 +3,7 @@ defmodule TodoApp.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Openmaize.LoginoutCheck, redirects: false
-    plug Openmaize.Authenticate, storage: nil
+    plug Openmaize.Authenticate
   end
 
   scope "/api", TodoApp do
