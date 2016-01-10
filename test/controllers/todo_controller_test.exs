@@ -10,7 +10,8 @@ defmodule TodoApp.TodoControllerTest do
                  title: "Search for meaning"}
   @invalid_attrs %{title: "Whatever", result: "satisfactory"}
 
-  {:ok, user_token} = %{id: 1, name: "Gladys", role: "user"} |> generate_token({0, 86400})
+  {:ok, user_token} = %{id: 1, name: "Gladys", role: "user"}
+                      |> generate_token(:name, {0, 86400})
   @user_token user_token
   @user Repo.get(User, 1)
 
