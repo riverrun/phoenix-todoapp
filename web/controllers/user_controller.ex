@@ -1,15 +1,23 @@
 defmodule TodoApp.UserController do
   use TodoApp.Web, :controller
 
-  import Openmaize.AccessControl
+  import TodoApp.Authorize
   alias TodoApp.User
 
-  plug Openmaize.Login, [storage: nil] when action in [:login]
-  plug :authorize_id, [redirects: false] when action in [:delete]
+  plug Openmaize.Login, [db_module: TodoApp.OpenmaizeEcto] when action in [:login]
+  plug :id_check when action in [:delete]
 
   def index(conn, _params) do
     users = Repo.all(User)
     render(conn, "index.json", users: users)
+  end
+
+  def login(conn, params) do
+    handle_login conn, params
+  end
+
+  def logout(conn, params) do
+    handle_logout conn, params
   end
 
   def show(conn, %{"id" => id}) do
@@ -26,10 +34,10 @@ defmodule TodoApp.UserController do
         |> put_status(:created)
         |> put_resp_header("location", user_path(conn, :show, user))
         |> render("show.json", user: user)
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(TodoApp.ChangesetView, "error.json", changeset: changeset)
+        |> render(TodoApp.ErrorView, "404.json", [])
     end
   end
 

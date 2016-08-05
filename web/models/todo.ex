@@ -3,24 +3,19 @@ defmodule TodoApp.Todo do
 
   schema "todos" do
     field :title, :string
-    field :notes, :string
     field :body, :string
+    field :notes, :string
     belongs_to :user, TodoApp.User
 
-    timestamps
+    timestamps()
   end
 
-  @required_fields ~w(title body)
-  @optional_fields ~w(notes)
-
   @doc """
-  Creates a changeset based on the `model` and `params`.
-
-  If no params are provided, an invalid changeset is returned
-  with no validation performed.
+  Builds a changeset based on the `struct` and `params`.
   """
-  def changeset(model, params \\ :empty) do
-    model
-    |> cast(params, @required_fields, @optional_fields)
+  def changeset(struct, params \\ %{}) do
+    struct
+    |> cast(params, [:title, :body, :notes])
+    |> validate_required([:title, :body])
   end
 end

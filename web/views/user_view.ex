@@ -9,9 +9,12 @@ defmodule TodoApp.UserView do
     %{data: render_one(user, TodoApp.UserView, "user.json")}
   end
 
+  def render("info.json", %{info: message}) do
+    %{info: %{detail: message}}
+  end
+
   def render("user.json", %{user: user}) do
     %{id: user.id,
-      name: user.name,
-      role: user.role}
+      username: user.username}
   end
 end

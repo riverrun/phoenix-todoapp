@@ -1,20 +1,22 @@
 defmodule TodoApp.UserControllerTest do
   use TodoApp.ConnCase
 
-  import Openmaize.Token.Create
+  import OpenmaizeJWT.Create
   alias TodoApp.User
 
-  @valid_attrs %{name: "Bill", password: "^hEsdg*F899", role: "user"}
-  @invalid_attrs %{name: "Albert", password: "password"}
+  @valid_attrs %{username: "Bill", password: "^hEsdg*F899"}
+  @invalid_attrs %{}
 
-  {:ok, user_token} = %{id: 3, name: "Tony", role: "user"}
-                      |> generate_token(:name, {0, 86400})
+  @secret String.duplicate("12345678", 8)
+
+  {:ok, user_token} = %{id: 3, username: "Tony"}
+                      |> generate_token({0, 86400}, @secret)
   @user_token user_token
 
-  setup do
-    conn = conn()
-    |> put_req_header("accept", "application/json")
-    |> put_req_header("authorization", "Bearer #{@user_token}")
+  setup %{conn: conn} do
+    conn = conn
+            |> put_req_header("accept", "application/json")
+            |> put_req_header("authorization", "Bearer #{@user_token}")
     {:ok, conn: conn}
   end
 
@@ -26,9 +28,9 @@ defmodule TodoApp.UserControllerTest do
   test "shows chosen user", %{conn: conn} do
     user = Repo.get(User, 1)
     conn = get conn, user_path(conn, :show, user)
-    assert json_response(conn, 200)["data"] == %{"id" => user.id,
-      "name" => user.name,
-      "role" => user.role}
+    assert json_response(conn, 200)["data"] ==
+      %{"id" => user.id,
+      "username" => user.username}
   end
 
   test "returns nil when id is nonexistent", %{conn: conn} do
@@ -39,12 +41,12 @@ defmodule TodoApp.UserControllerTest do
   test "creates and returns user when data is valid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @valid_attrs
     assert json_response(conn, 201)["data"]["id"]
-    assert Repo.get_by(User, %{name: "Bill"})
+    assert Repo.get_by(User, %{username: "Bill"})
   end
 
   test "does not create user and returns errors when data is invalid", %{conn: conn} do
     conn = post conn, user_path(conn, :create), user: @invalid_attrs
-    assert json_response(conn, 422)["errors"]["role"] == ["can't be blank"]
+    assert json_response(conn, 422)["errors"]["username"] == ["can't be blank"]
   end
 
   test "deletes user if user is current_user", %{conn: conn} do

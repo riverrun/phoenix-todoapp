@@ -1,23 +1,13 @@
 defmodule TodoApp.TodoController do
   use TodoApp.Web, :controller
 
+  import TodoApp.Authorize
   alias TodoApp.Todo
-  alias TodoApp.User
 
-  def action(%Plug.Conn{assigns: %{current_user: nil}} = conn, _) do
-    render(conn, TodoApp.ErrorView, "401.json", [])
-  end
-  def action(%Plug.Conn{params: %{"user_id" => user_id} = params,
-                        assigns: %{current_user: current_user}} = conn, _) do
-    if user_id == to_string(current_user.id) do
-      apply(__MODULE__, action_name(conn), [conn, params, Repo.get(User, current_user.id)])
-    else
-      render(conn, TodoApp.ErrorView, "403.json", [])
-    end
-  end
+  def action(conn, _), do: auth_action_id conn, __MODULE__
 
   def index(conn, _params, user) do
-    todos = Repo.all(user_todos(user))
+    todos = Repo.all assoc(user, :todos)
     render(conn, "index.json", todos: todos)
   end
 
@@ -30,40 +20,36 @@ defmodule TodoApp.TodoController do
         |> put_status(:created)
         |> put_resp_header("location", user_todo_path(conn, :show, user, todo))
         |> render("show.json", todo: todo)
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(TodoApp.ChangesetView, "error.json", changeset: changeset)
+        |> render(TodoApp.ErrorView, "404.json", [])
     end
   end
 
   def show(conn, %{"id" => id}, user) do
-    todo = Repo.get(user_todos(user), id)
+    todo = Repo.get assoc(user, :todos), id
     render(conn, "show.json", todo: todo)
   end
 
   def update(conn, %{"id" => id, "todo" => todo_params}, user) do
-    todo = Repo.get(user_todos(user), id)
+    todo = Repo.get(assoc(user, :todos), id)
     changeset = Todo.changeset(todo, todo_params)
 
     case Repo.update(changeset) do
       {:ok, todo} ->
         render(conn, "show.json", todo: todo)
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(TodoApp.ChangesetView, "error.json", changeset: changeset)
+        |> render(TodoApp.ErrorView, "404.json", [])
     end
   end
 
   def delete(conn, %{"id" => id}, user) do
-    todo = Repo.get(user_todos(user), id)
+    todo = Repo.get(assoc(user, :todos), id)
     Repo.delete!(todo)
 
     send_resp(conn, :no_content, "")
-  end
-
-  defp user_todos(user) do
-    assoc(user, :todos)
   end
 end

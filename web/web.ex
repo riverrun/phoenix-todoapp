@@ -22,7 +22,7 @@ defmodule TodoApp.Web do
 
       import Ecto
       import Ecto.Changeset
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
     end
   end
 
@@ -32,9 +32,10 @@ defmodule TodoApp.Web do
 
       alias TodoApp.Repo
       import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
 
       import TodoApp.Router.Helpers
+      import TodoApp.Gettext
     end
   end
 
@@ -46,6 +47,8 @@ defmodule TodoApp.Web do
       import Phoenix.Controller, only: [get_csrf_token: 0, get_flash: 2, view_module: 1]
 
       import TodoApp.Router.Helpers
+      import TodoApp.ErrorHelpers
+      import TodoApp.Gettext
     end
   end
 
@@ -61,7 +64,8 @@ defmodule TodoApp.Web do
 
       alias TodoApp.Repo
       import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
+      import Ecto.Query
+      import TodoApp.Gettext
     end
   end
 

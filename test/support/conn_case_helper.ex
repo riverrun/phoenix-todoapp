@@ -6,9 +6,9 @@ defmodule ConnCase.Helper do
   alias TodoApp.User
 
   @users [
-    %{id: 1, name: "Gladys", role: "user", password: "mangoes&gooseberries"},
-    %{id: 2, name: "Fred", role: "user", password: "mangoes&gooseberries"},
-    %{id: 3, name: "Tony", role: "user", password: "mangoes&gooseberries"}
+    %{id: 1, username: "Gladys", password: "mangoes&gooseberries"},
+    %{id: 2, username: "Fred", password: "mangoes&gooseberries"},
+    %{id: 3, username: "Tony", password: "mangoes&gooseberries"}
   ]
   @todos [
     %{id: 1, title: "Feed pet", notes: "Attempted, but not finished",

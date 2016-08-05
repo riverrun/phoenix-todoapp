@@ -55,6 +55,10 @@ config :logger, level: :info
 #
 #     config :todo_app, TodoApp.Endpoint, server: true
 #
+# You will also need to set the application root to `.` in order
+# for the new static assets to be served after a hot upgrade:
+#
+#     config :todo_app, TodoApp.Endpoint, root: "."
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.

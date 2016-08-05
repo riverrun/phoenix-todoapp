@@ -5,12 +5,15 @@
 # is restricted to this project.
 use Mix.Config
 
+# General application configuration
+config :todo_app,
+  ecto_repos: [TodoApp.Repo]
+
 # Configures the endpoint
 config :todo_app, TodoApp.Endpoint,
   url: [host: "localhost"],
-  root: Path.dirname(__DIR__),
-  secret_key_base: "PqGW2Zu74mI6Bh49J/5Tfa3n7EgOi8LwdVGMWZzykCq4FJLwXQI+zc6L7HKlCPWi",
-  render_errors: [accepts: ~w(json)],
+  secret_key_base: "2AvAHXzlkOHae+duzQkuM4LUwcf1MW09PNxoJqdb/P8I84N1CimJwCnOpydT4Gh/",
+  render_errors: [view: TodoApp.ErrorView, accepts: ~w(json)],
   pubsub: [name: TodoApp.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
@@ -22,8 +25,3 @@ config :logger, :console,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
-
-# Configure phoenix generators
-config :phoenix, :generators,
-  migration: true,
-  binary_id: false
