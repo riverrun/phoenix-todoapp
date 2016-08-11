@@ -27,8 +27,7 @@ defmodule TodoApp.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:postgrex, ">= 0.0.0"},
-     {:openmaize_jwt, git: "https://github.com/riverrun/openmaize_jwt.git"},
-     #{:openmaize_jwt, "~> 1.0"},
+     {:openmaize_jwt, "~> 1.0.0"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"}]
   end

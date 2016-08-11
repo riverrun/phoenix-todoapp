@@ -44,7 +44,7 @@ defmodule TodoApp.OpenmaizeEcto do
   @doc """
   Find the user, using the user id, in the database.
   """
-  def find_user_byid(id) do
+  def find_user_by_id(id) do
     Repo.get(User, id)
   end
 
