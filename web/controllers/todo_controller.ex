@@ -7,9 +7,9 @@ defmodule TodoApp.TodoController do
     put_status(conn, :unauthorized) |> render(TodoApp.AuthView, "401.json", []) |> halt
   end
   def action(%Plug.Conn{params: %{"user_id" => user_id} = params,
-    assigns: %{current_user: current_user}} = conn, _) do
-    if user_id == to_string(current_user.id) do
-      apply(__MODULE__, action_name(conn), [conn, params, Repo.get(User, current_user.id)])
+    assigns: %{current_user: current_user_id}} = conn, _) do
+    if user_id == to_string(current_user_id) do
+      apply(__MODULE__, action_name(conn), [conn, params, Repo.get(User, current_user_id)])
     else
       put_status(conn, :forbidden) |> render(TodoApp.AuthView, "403.json", []) |> halt
     end

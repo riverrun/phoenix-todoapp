@@ -60,8 +60,8 @@ defmodule TodoApp.UserController do
     put_status(conn, :unauthorized) |> render(TodoApp.AuthView, "401.json", []) |> halt
   end
   defp id_check(%Plug.Conn{params: %{"id" => id},
-                           assigns: %{current_user: %{id: current_id}}} = conn, _opts) do
-    id == to_string(current_id) and conn ||
+                           assigns: %{current_user: current_user_id}} = conn, _opts) do
+    id == to_string(current_user_id) and conn ||
     put_status(conn, :forbidden) |> render(TodoApp.AuthView, "403.json", []) |> halt
   end
 end
