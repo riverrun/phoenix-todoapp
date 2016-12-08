@@ -9,8 +9,8 @@ defmodule TodoApp.Router do
   scope "/api", TodoApp do
     pipe_through :api
 
-    post "/login", UserController, :login
-    resources "/users", UserController, only: [:index, :show, :create, :delete] do
+    resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/users", UserController, except: [:new, :edit] do
       resources "/todos", TodoController, except: [:new, :edit]
     end
   end

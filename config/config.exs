@@ -12,7 +12,7 @@ config :todo_app,
 # Configures the endpoint
 config :todo_app, TodoApp.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "2AvAHXzlkOHae+duzQkuM4LUwcf1MW09PNxoJqdb/P8I84N1CimJwCnOpydT4Gh/",
+  secret_key_base: "TedKpJ0Jz2e/NMzcOtEu+3xWGAEdrQo/oyA63Ky69vUF6KSg2YtVDJFiZzhccy2b",
   render_errors: [view: TodoApp.ErrorView, accepts: ~w(json)],
   pubsub: [name: TodoApp.PubSub,
            adapter: Phoenix.PubSub.PG2]

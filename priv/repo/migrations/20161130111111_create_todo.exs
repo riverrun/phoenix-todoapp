@@ -7,6 +7,7 @@ defmodule TodoApp.Repo.Migrations.CreateTodo do
       add :body, :string
       add :notes, :string
       add :user_id, references(:users, on_delete: :nothing)
+      #add :user_id, references(:users, on_delete: :delete_all)
 
       timestamps()
     end

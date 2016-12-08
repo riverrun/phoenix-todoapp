@@ -29,7 +29,3 @@ config :todo_app, TodoApp.Repo,
   database: "todo_app_dev",
   hostname: "localhost",
   pool_size: 10
-
-# OpenmaizeJWT authentication library configuration
-config :openmaize_jwt,
-  signing_salt: "no one will guess this"

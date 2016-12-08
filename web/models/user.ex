@@ -1,10 +1,11 @@
 defmodule TodoApp.User do
   use TodoApp.Web, :model
 
-  alias TodoApp.OpenmaizeEcto
+  alias Openmaize.Database, as: DB
 
   schema "users" do
     field :username, :string
+    field :email, :string
     field :password, :string, virtual: true
     field :password_hash, :string
     has_many :todos, TodoApp.Todo
@@ -17,14 +18,14 @@ defmodule TodoApp.User do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:username])
-    |> validate_required([:username])
+    |> cast(params, [:username, :email])
+    |> validate_required([:username, :email])
     |> unique_constraint(:username)
   end
 
-  def auth_changeset(model, params) do
-    model
+  def auth_changeset(struct, params) do
+    struct
     |> changeset(params)
-    |> OpenmaizeEcto.add_password_hash(params)
+    |> DB.add_password_hash(params)
   end
 end

@@ -17,7 +17,3 @@ config :todo_app, TodoApp.Repo,
   database: "todo_app_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
-
-# OpenmaizeJWT authentication library configuration
-config :openmaize_jwt,
-  signing_salt: "no one will guess this"

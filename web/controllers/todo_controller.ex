@@ -1,10 +1,19 @@
 defmodule TodoApp.TodoController do
   use TodoApp.Web, :controller
 
-  import TodoApp.Authorize
-  alias TodoApp.Todo
+  alias TodoApp.{Repo, Todo, User}
 
-  def action(conn, _), do: auth_action_id conn, __MODULE__
+  def action(%Plug.Conn{assigns: %{current_user: nil}} = conn, _) do
+    put_status(conn, :unauthorized) |> render(TodoApp.AuthView, "401.json", []) |> halt
+  end
+  def action(%Plug.Conn{params: %{"user_id" => user_id} = params,
+    assigns: %{current_user: current_user}} = conn, _) do
+    if user_id == to_string(current_user.id) do
+      apply(__MODULE__, action_name(conn), [conn, params, Repo.get(User, current_user.id)])
+    else
+      put_status(conn, :forbidden) |> render(TodoApp.AuthView, "403.json", []) |> halt
+    end
+  end
 
   def index(conn, _params, user) do
     todos = Repo.all assoc(user, :todos)

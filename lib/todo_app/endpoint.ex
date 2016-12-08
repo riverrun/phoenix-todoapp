@@ -34,7 +34,7 @@ defmodule TodoApp.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_todo_app_key",
-    signing_salt: "n5VyhPCN"
+    signing_salt: "ixDO3NIA"
 
   plug TodoApp.Router
 end
