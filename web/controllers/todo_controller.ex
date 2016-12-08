@@ -32,7 +32,7 @@ defmodule TodoApp.TodoController do
       {:error, _changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(TodoApp.ErrorView, "404.json", [])
+        |> render(TodoApp.ChangesetView, "error.json", changeset: changeset)
     end
   end
 
@@ -51,7 +51,7 @@ defmodule TodoApp.TodoController do
       {:error, _changeset} ->
         conn
         |> put_status(:unprocessable_entity)
-        |> render(TodoApp.ErrorView, "404.json", [])
+        |> render(TodoApp.ChangesetView, "error.json", changeset: changeset)
     end
   end
 
