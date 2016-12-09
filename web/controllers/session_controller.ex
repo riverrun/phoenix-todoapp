@@ -12,8 +12,4 @@ defmodule TodoApp.SessionController do
     token = Phoenix.Token.sign(TodoApp.Endpoint, "user token", user.id)
     render(conn, TodoApp.SessionView, "info.json", %{info: token})
   end
-
-  def delete(conn, _params) do
-    render(conn, TodoApp.SessionView, "info.json", %{info: "You have logged out"})
-  end
 end
