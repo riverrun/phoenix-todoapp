@@ -22,9 +22,4 @@ defmodule TodoApp.SessionControllerTest do
     assert json_response(conn, 401)["errors"]["detail"] =~ "need to login"
   end
 
-  test "logout succeeds", %{conn: conn, user: user} do
-    conn = delete conn, session_path(conn, :delete, user)
-    assert json_response(conn, 200)["info"]["detail"] =~ "have logged out"
-  end
-
 end
