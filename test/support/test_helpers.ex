@@ -1,7 +1,6 @@
 defmodule TodoApp.TestHelpers do
   use Phoenix.ConnTest
 
-  import OpenmaizeJWT.Create
   alias TodoApp.{Repo, Todo, User}
 
   def add_user(username) do
@@ -13,12 +12,10 @@ defmodule TodoApp.TestHelpers do
   end
 
   def add_token_conn(conn, user) do
-    Application.put_env(:openmaize_jwt, :signing_key, String.duplicate("12345678", 8))
-    {:ok, user_token} = %{id: user.id, username: user.username}
-    |> generate_token({0, 86400})
+    user_token = Phoenix.Token.sign(TodoApp.Endpoint, "user token", user.id)
     conn
     |> put_req_header("accept", "application/json")
-    |> put_req_header("authorization", "Bearer #{user_token}")
+    |> put_req_header("authorization", user_token)
   end
 
   def add_todo(user, todo) do
