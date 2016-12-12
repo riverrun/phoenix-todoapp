@@ -3,8 +3,8 @@ defmodule TodoApp.Mixfile do
 
   def project do
     [app: :todo_app,
-     version: "0.0.1",
-     elixir: "~> 1.2",
+     version: "0.0.2",
+     elixir: "~> 1.3",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
@@ -19,7 +19,7 @@ defmodule TodoApp.Mixfile do
   def application do
     [mod: {TodoApp, []},
      applications: [:phoenix, :phoenix_pubsub, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :openmaize_jwt]]
+                    :phoenix_ecto, :postgrex, :openmaize]]
   end
 
   # Specifies which paths to compile per environment.
@@ -34,7 +34,7 @@ defmodule TodoApp.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.0"},
      {:postgrex, ">= 0.0.0"},
-     {:openmaize_jwt, "~> 1.0"},
+     {:openmaize, "~> 2.4"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"}]
   end
