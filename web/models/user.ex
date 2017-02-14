@@ -4,8 +4,8 @@ defmodule TodoApp.User do
   alias Openmaize.Database, as: DB
 
   schema "users" do
-    field :username, :string
     field :email, :string
+    field :username, :string
     field :password, :string, virtual: true
     field :password_hash, :string
     has_many :todos, TodoApp.Todo
@@ -20,7 +20,7 @@ defmodule TodoApp.User do
     struct
     |> cast(params, [:username, :email])
     |> validate_required([:username, :email])
-    |> unique_constraint(:username)
+    |> unique_constraint(:email)
   end
 
   def auth_changeset(struct, params) do

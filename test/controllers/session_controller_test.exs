@@ -3,8 +3,8 @@ defmodule TodoApp.SessionControllerTest do
 
   import TodoApp.TestHelpers
 
-  @valid_attrs %{username: "robin", password: "mangoes&g0oseberries"}
-  @invalid_attrs %{username: "robin", password: "maaaangoes&g00zeberries"}
+  @valid_attrs %{email: "robin@mail.com", password: "mangoes&g0oseberries"}
+  @invalid_attrs %{email: "robin@mail.com", password: "maaaangoes&g00zeberries"}
 
   setup %{conn: conn} do
     user = add_user("robin")

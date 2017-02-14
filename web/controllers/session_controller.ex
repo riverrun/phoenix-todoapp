@@ -2,7 +2,6 @@ defmodule TodoApp.SessionController do
   use TodoApp.Web, :controller
 
   plug Openmaize.Login when action in [:create]
-  #plug Openmaize.Login, [unique_id: :email] when action in [:create]
 
   def create(%Plug.Conn{private: %{openmaize_error: _message}} = conn, _params) do
     put_status(conn, :unauthorized)

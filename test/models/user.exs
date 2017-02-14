@@ -3,7 +3,7 @@ defmodule TodoApp.UserTest do
 
   alias TodoApp.User
 
-  @valid_attrs %{username: "fred", email: "fred@mail.com", password: "mangoes&gooseberries"}
+  @valid_attrs %{email: "fred@mail.com", username: "fred", password: "mangoes&gooseberries"}
   @invalid_attrs %{email: "fred@mail.com", password: "mangoes&gooseberries"}
 
   test "changeset with valid attributes" do
