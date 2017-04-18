@@ -2,6 +2,7 @@ defmodule TodoApp.Web.SessionController do
   use TodoApp.Web, :controller
 
   import TodoApp.Web.Authorize
+
   plug Phauxth.Login when action in [:create]
 
   def create(%Plug.Conn{private: %{phauxth_error: _message}} = conn, _params) do
