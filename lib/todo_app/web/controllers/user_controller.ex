@@ -24,20 +24,17 @@ defmodule TodoApp.Web.UserController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def show(%Plug.Conn{assigns: %{current_user: user}} = conn, _) do
     render(conn, "show.json", user: user)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Accounts.get_user!(id)
+  def update(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.update_user(user, user_params) do
       render(conn, "show.json", user: user)
     end
   end
 
-  def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+  def delete(%Plug.Conn{assigns: %{current_user: user}} = conn, _) do
     with {:ok, %User{}} <- Accounts.delete_user(user) do
       send_resp(conn, :no_content, "")
     end
