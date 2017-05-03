@@ -6,7 +6,7 @@ defmodule TodoApp.AccountsTest do
 
   @create_attrs %{email: "fred@mail.com", password: "mangoes&gooseberries"}
   @update_attrs %{email: "frederick@mail.com"}
-  @invalid_attrs %{email: "", password: ""}
+  @invalid_attrs %{email: nil}
 
   def fixture(:user, attrs \\ @create_attrs) do
     {:ok, user} = Accounts.create_user(attrs)
@@ -55,4 +55,5 @@ defmodule TodoApp.AccountsTest do
     user = fixture(:user)
     assert %Ecto.Changeset{} = Accounts.change_user(user)
   end
+
 end

@@ -8,7 +8,7 @@
   "elixir_make": {:hex, :elixir_make, "0.4.0", "992f38fabe705bb45821a728f20914c554b276838433349d4f2341f7a687cddf", [:mix], []},
   "gettext": {:hex, :gettext, "0.13.1", "5e0daf4e7636d771c4c71ad5f3f53ba09a9ae5c250e1ab9c42ba9edccc476263", [:mix], []},
   "mime": {:hex, :mime, "1.1.0", "01c1d6f4083d8aa5c7b8c246ade95139620ef8effb009edde934e0ec3b28090a", [:mix], []},
-  "phauxth": {:git, "https://github.com/riverrun/phauxth.git", "fd9dc588e8f9a25e9589852f9fb34346244d05e8", []},
+  "phauxth": {:hex, :phauxth, "0.9.0", "7996b51d52160f0e07a172ac9e9908d270721471676797f3f4a302b2906fece9", [:mix], [{:comeonin, "~> 3.0", [hex: :comeonin, optional: false]}, {:cowboy, "~> 1.1", [hex: :cowboy, optional: false]}, {:ecto, "~> 2.1", [hex: :ecto, optional: false]}, {:phoenix, "~> 1.3.0-rc", [hex: :phoenix, optional: false]}, {:postgrex, "~> 0.13", [hex: :postgrex, optional: true]}]},
   "phoenix": {:hex, :phoenix, "1.3.0-rc.1", "0d04948a4bd24823f101024c07b6a4d35e58f1fd92a465c1bc75dd37acd1041a", [:mix], [{:cowboy, "~> 1.0", [hex: :cowboy, optional: true]}, {:phoenix_pubsub, "~> 1.0", [hex: :phoenix_pubsub, optional: false]}, {:plug, "~> 1.3.2 or ~> 1.4", [hex: :plug, optional: false]}, {:poison, "~> 2.2 or ~> 3.0", [hex: :poison, optional: false]}]},
   "phoenix_ecto": {:hex, :phoenix_ecto, "3.2.3", "450c749876ff1de4a78fdb305a142a76817c77a1cd79aeca29e5fc9a6c630b26", [:mix], [{:ecto, "~> 2.1", [hex: :ecto, optional: false]}, {:phoenix_html, "~> 2.9", [hex: :phoenix_html, optional: true]}, {:plug, "~> 1.0", [hex: :plug, optional: false]}]},
   "phoenix_pubsub": {:hex, :phoenix_pubsub, "1.0.1", "c10ddf6237007c804bf2b8f3c4d5b99009b42eca3a0dfac04ea2d8001186056a", [:mix], []},

@@ -2,19 +2,17 @@ defmodule TodoApp.Web.UserController do
   use TodoApp.Web, :controller
 
   import TodoApp.Web.Authorize
-  alias TodoApp.Accounts
-  alias TodoApp.Accounts.User
+  alias TodoApp.{Accounts, Accounts.User}
 
   action_fallback TodoApp.Web.FallbackController
 
   plug :user_check when action in [:index, :show]
   plug :id_check when action in [:update, :delete]
 
-  def index(conn, _params) do
+  def index(conn, _) do
     users = Accounts.list_users()
     render(conn, "index.json", users: users)
   end
-
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
       conn

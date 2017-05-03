@@ -4,7 +4,6 @@ defmodule TodoApp.Accounts do
   """
 
   import Ecto.{Query, Changeset}, warn: false
-  alias Phauxth.Login.DB_Utils
   alias TodoApp.Repo
 
   alias TodoApp.Accounts.User
@@ -19,17 +18,23 @@ defmodule TodoApp.Accounts do
   def get_by(attrs) do
     Repo.get_by(User, attrs)
   end
-
-  def create_user(attrs \\ %{}) do
+  def create_user(attrs) do
     %User{}
-    |> user_changeset(attrs)
-    |> DB_Utils.add_password_hash(attrs)
+    |> create_changeset(attrs)
     |> Repo.insert()
   end
 
   def update_user(%User{} = user, attrs) do
     user
-    |> user_changeset(attrs)
+    |> update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def update_password(%User{} = user, attrs) do
+    user
+    |> update_changeset(attrs)
+    |> put_pass_hash()
+    |> change(%{reset_token: nil, reset_sent_at: nil})
     |> Repo.update()
   end
 
@@ -47,4 +52,24 @@ defmodule TodoApp.Accounts do
     |> validate_required([:email])
     |> unique_constraint(:email)
   end
+  defp create_changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email, :password])
+    |> unique_constraint(:email)
+    |> put_pass_hash()
+  end
+
+  defp update_changeset(%User{} = user, attrs) do
+    user
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email])
+    |> unique_constraint(:email)
+  end
+
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
+      %{password: password}} = changeset) do
+    change(changeset, %{password_hash: Comeonin.Bcrypt.hashpwsalt(password), password: nil})
+  end
+  defp put_pass_hash(changeset), do: changeset
 end

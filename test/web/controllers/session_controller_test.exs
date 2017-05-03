@@ -3,7 +3,7 @@ defmodule TodoApp.Web.SessionControllerTest do
 
   import TodoApp.Web.AuthCase
 
-  @valid_attrs %{email: "robin@mail.com", password: "mangoes&g0oseberries"}
+  @create_attrs %{email: "robin@mail.com", password: "mangoes&g0oseberries"}
   @invalid_attrs %{email: "robin@mail.com", password: "maaaangoes&g00zeberries"}
 
   setup %{conn: conn} do
@@ -13,13 +13,12 @@ defmodule TodoApp.Web.SessionControllerTest do
   end
 
   test "login succeeds", %{conn: conn} do
-    conn = post conn, session_path(conn, :create), session: @valid_attrs
-    assert json_response(conn, 200)["access_token"]
+    conn = post conn, session_path(conn, :create), session: @create_attrs
+    assert json_response(conn, 200)["info"]["detail"]
   end
 
   test "login fails", %{conn: conn} do
     conn = post conn, session_path(conn, :create), session: @invalid_attrs
     assert json_response(conn, 401)["errors"]["detail"] =~ "need to login"
   end
-
 end
