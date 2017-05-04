@@ -49,7 +49,6 @@ defmodule TodoApp.JobsTest do
 
   test "delete_todo/1 deletes the todo", %{todo: todo} do
     assert {:ok, %Todo{}} = Jobs.delete_todo(todo)
-    #assert_raise Ecto.NoResultsError, fn -> Jobs.get_todo(todo.id) end
     refute Jobs.get_todo(todo.id)
   end
 

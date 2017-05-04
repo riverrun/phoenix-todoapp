@@ -6,7 +6,6 @@ defmodule TodoApp.Jobs do
   import Ecto
   import Ecto.{Query, Changeset}, warn: false
   alias TodoApp.Repo
-
   alias TodoApp.Jobs.Todo
 
   def list_todos do
@@ -14,10 +13,11 @@ defmodule TodoApp.Jobs do
   end
 
   def list_todos(user) do
-    Repo.all assoc(user, :jobs_todos)
+    Repo.all(assoc(user, :jobs_todos))
   end
 
   def get_todo(id), do: Repo.get(Todo, id)
+
   def get_todo(user, id), do: Repo.get(assoc(user, :jobs_todos), id)
 
   def get_by(attrs) do

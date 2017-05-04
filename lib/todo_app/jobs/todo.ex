@@ -5,7 +5,7 @@ defmodule TodoApp.Jobs.Todo do
     field :title, :string
     field :body, :string
     field :notes, :string
-    field :user_id, :id
+    belongs_to :user, TodoApp.Accounts.User
 
     timestamps()
   end
