@@ -13,12 +13,12 @@ defmodule TodoApp.Jobs do
   end
 
   def list_todos(user) do
-    Repo.all(assoc(user, :jobs_todos))
+    Repo.all(assoc(user, :todos))
   end
 
   def get_todo(id), do: Repo.get(Todo, id)
 
-  def get_todo(user, id), do: Repo.get(assoc(user, :jobs_todos), id)
+  def get_todo(user, id), do: Repo.get(assoc(user, :todos), id)
 
   def get_by(attrs) do
     Repo.get_by(Todo, attrs)
@@ -26,7 +26,7 @@ defmodule TodoApp.Jobs do
 
   def create_todo(user, attrs \\ %{}) do
     user
-    |> build_assoc(:jobs_todos)
+    |> build_assoc(:todos)
     |> todo_changeset(attrs)
     |> Repo.insert()
   end

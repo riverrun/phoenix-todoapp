@@ -3,13 +3,12 @@ defmodule TodoApp.Web.SessionController do
 
   import TodoApp.Web.Authorize
 
-  plug Phauxth.Login when action in [:create]
-
-  def create(%Plug.Conn{private: %{phauxth_error: _message}} = conn, _) do
-    error(conn, :unauthorized, 401)
-  end
-  def create(%Plug.Conn{private: %{phauxth_user: %{id: id}}} = conn, _) do
-    token = Phoenix.Token.sign(TodoApp.Web.Endpoint, "user auth", id)
-    render(conn, TodoApp.Web.SessionView, "info.json", %{info: token})
+  def create(conn, %{"session" => session_params}) do
+    case Phauxth.Login.verify(session_params, TodoApp.Accounts) do
+      {:ok, user} ->
+        token = Phoenix.Token.sign(TodoApp.Web.Endpoint, "user auth", user.id)
+        render(conn, TodoApp.Web.SessionView, "info.json", %{info: token})
+      {:error, _message} -> error(conn, :unauthorized, 401)
+    end
   end
 end

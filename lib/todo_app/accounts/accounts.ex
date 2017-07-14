@@ -13,11 +13,13 @@ defmodule TodoApp.Accounts do
   end
 
   def get_user!(id), do: Repo.get!(User, id)
-  def get_user(id), do: Repo.get(User, id)
+
+  def get(id), do: Repo.get(User, id)
 
   def get_by(attrs) do
     Repo.get_by(User, attrs)
   end
+
   def create_user(attrs) do
     %User{}
     |> create_changeset(attrs)
@@ -69,7 +71,7 @@ defmodule TodoApp.Accounts do
 
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
       %{password: password}} = changeset) do
-    change(changeset, %{password_hash: Comeonin.Bcrypt.hashpwsalt(password), password: nil})
+    change(changeset, Comeonin.add_hash(%{password: password}, Bcrypt))
   end
   defp put_pass_hash(changeset), do: changeset
 end

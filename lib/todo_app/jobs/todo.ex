@@ -1,7 +1,7 @@
 defmodule TodoApp.Jobs.Todo do
   use Ecto.Schema
 
-  schema "jobs_todos" do
+  schema "todos" do
     field :title, :string
     field :body, :string
     field :notes, :string

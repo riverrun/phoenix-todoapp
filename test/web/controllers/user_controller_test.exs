@@ -52,7 +52,7 @@ defmodule TodoApp.Web.UserControllerTest do
   test "updates chosen user when data is valid", %{conn: conn, user: user} do
     conn = put conn, user_path(conn, :update, user), user: @update_attrs
     assert json_response(conn, 200)["data"]["id"] == user.id
-    updated_user = Accounts.get_user(user.id)
+    updated_user = Accounts.get(user.id)
     assert updated_user.email == "william@mail.com"
   end
 
@@ -66,13 +66,13 @@ defmodule TodoApp.Web.UserControllerTest do
   test "deletes chosen user", %{conn: conn, user: user} do
     conn = delete conn, user_path(conn, :delete, user)
     assert response(conn, 204)
-    refute Accounts.get_user(user.id)
+    refute Accounts.get(user.id)
   end
 
   @tag login: "reg@mail.com"
   test "cannot delete other user", %{conn: conn, other: other} do
     conn = delete conn, user_path(conn, :delete, other)
     assert json_response(conn, 403)["errors"]["detail"] =~ "not authorized"
-    assert Accounts.get_user(other.id)
+    assert Accounts.get(other.id)
   end
 end
