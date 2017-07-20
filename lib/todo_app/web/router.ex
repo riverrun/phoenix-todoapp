@@ -3,7 +3,7 @@ defmodule TodoApp.Web.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Phauxth.Authenticate, context: TodoApp.Web.Endpoint
+    plug Phauxth.Authenticate, token: TodoApp.Web.Endpoint
   end
 
   scope "/api", TodoApp.Web do

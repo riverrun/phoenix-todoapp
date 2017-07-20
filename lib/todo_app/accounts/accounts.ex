@@ -16,8 +16,8 @@ defmodule TodoApp.Accounts do
 
   def get(id), do: Repo.get(User, id)
 
-  def get_by(attrs) do
-    Repo.get_by(User, attrs)
+  def get_by(%{"email" => email}) do
+    Repo.get_by(User, email: email)
   end
 
   def create_user(attrs) do

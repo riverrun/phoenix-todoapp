@@ -25,7 +25,7 @@ defmodule TodoApp.Mixfile do
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_ecto, "~> 3.2"},
      {:postgrex, ">= 0.0.0"},
-     {:phauxth, "~> 0.12-rc"},
+     {:phauxth, "~> 0.13-rc"},
      {:bcrypt_elixir, "~> 0.11"},
      {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"}]
