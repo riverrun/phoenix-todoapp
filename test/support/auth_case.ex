@@ -1,4 +1,4 @@
-defmodule TodoApp.Web.AuthCase do
+defmodule TodoAppWeb.AuthCase do
   use Phoenix.ConnTest
 
   alias TodoApp.Accounts
@@ -10,7 +10,9 @@ defmodule TodoApp.Web.AuthCase do
   end
 
   def add_token_conn(conn, user) do
-    user_token = Phoenix.Token.sign(TodoApp.Web.Endpoint, "user auth", user.id)
+    secret = TodoAppWeb.Endpoint.config(:secret_key_base)
+    conn = put_in(conn.secret_key_base, secret)
+    user_token = Phauxth.Token.sign(conn, user.id)
     conn
     |> put_req_header("accept", "application/json")
     |> put_req_header("authorization", user_token)

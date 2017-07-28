@@ -1,12 +1,12 @@
-defmodule TodoApp.Web.Router do
-  use TodoApp.Web, :router
+defmodule TodoAppWeb.Router do
+  use TodoAppWeb, :router
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug Phauxth.Authenticate, token: TodoApp.Web.Endpoint
+    plug Phauxth.Authenticate, method: :token
   end
 
-  scope "/api", TodoApp.Web do
+  scope "/api", TodoAppWeb do
     pipe_through :api
 
     post "/sessions/create", SessionController, :create

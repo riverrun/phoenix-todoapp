@@ -1,7 +1,7 @@
 defmodule TodoApp.JobsTest do
   use TodoApp.DataCase
 
-  import TodoApp.Web.AuthCase
+  import TodoAppWeb.AuthCase
   alias TodoApp.Jobs
   alias TodoApp.Jobs.Todo
 

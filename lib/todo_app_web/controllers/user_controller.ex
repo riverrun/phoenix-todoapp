@@ -1,10 +1,10 @@
-defmodule TodoApp.Web.UserController do
-  use TodoApp.Web, :controller
+defmodule TodoAppWeb.UserController do
+  use TodoAppWeb, :controller
 
-  import TodoApp.Web.Authorize
+  import TodoAppWeb.Authorize
   alias TodoApp.{Accounts, Accounts.User}
 
-  action_fallback TodoApp.Web.FallbackController
+  action_fallback TodoAppWeb.FallbackController
 
   plug :user_check when action in [:index, :show]
   plug :id_check when action in [:update, :delete]

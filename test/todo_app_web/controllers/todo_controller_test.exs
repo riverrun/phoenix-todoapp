@@ -1,7 +1,7 @@
-defmodule TodoApp.Web.TodoControllerTest do
-  use TodoApp.Web.ConnCase
+defmodule TodoAppWeb.TodoControllerTest do
+  use TodoAppWeb.ConnCase
 
-  import TodoApp.Web.AuthCase
+  import TodoAppWeb.AuthCase
   alias TodoApp.Jobs
 
   @create_attrs %{body: "Need to find the meaning of life",

@@ -1,5 +1,5 @@
-defmodule TodoApp.Web.SessionView do
-  use TodoApp.Web, :view
+defmodule TodoAppWeb.SessionView do
+  use TodoAppWeb, :view
 
   def render("info.json", %{info: message}) do
     %{info: %{detail: message}}

@@ -1,5 +1,5 @@
-defmodule TodoApp.Web.AuthView do
-  use TodoApp.Web, :view
+defmodule TodoAppWeb.AuthView do
+  use TodoAppWeb, :view
 
   def render("401.json", _assigns) do
     %{errors: %{detail: "You need to login to view this resource"}}

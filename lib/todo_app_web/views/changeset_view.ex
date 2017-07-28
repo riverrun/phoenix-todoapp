@@ -1,5 +1,5 @@
-defmodule TodoApp.Web.ChangesetView do
-  use TodoApp.Web, :view
+defmodule TodoAppWeb.ChangesetView do
+  use TodoAppWeb, :view
 
   @doc """
   Traverses and translates changeset errors.

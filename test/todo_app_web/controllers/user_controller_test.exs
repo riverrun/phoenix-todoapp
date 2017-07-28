@@ -1,7 +1,7 @@
-defmodule TodoApp.Web.UserControllerTest do
-  use TodoApp.Web.ConnCase
+defmodule TodoAppWeb.UserControllerTest do
+  use TodoAppWeb.ConnCase
 
-  import TodoApp.Web.AuthCase
+  import TodoAppWeb.AuthCase
   alias TodoApp.Accounts
 
   @create_attrs %{"email" => "bill@mail.com", "password" => "hard2guess"}

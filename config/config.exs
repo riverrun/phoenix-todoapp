@@ -10,10 +10,10 @@ config :todo_app,
   ecto_repos: [TodoApp.Repo]
 
 # Configures the endpoint
-config :todo_app, TodoApp.Web.Endpoint,
+config :todo_app, TodoAppWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "xTurykTS3CvIBdjy4uqZNg11GnW/8LmKPEoixIDjza/kDElVmk+naX3gf8xxnvQB",
-  render_errors: [view: TodoApp.Web.ErrorView, accepts: ~w(json)],
+  render_errors: [view: TodoAppWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: TodoApp.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
@@ -23,12 +23,7 @@ config :logger, :console,
   metadata: [:request_id]
 
 config :phauxth,
-  repo: TodoApp.Repo,
-  user_mod: TodoApp.Accounts.User
-
-config :phauxth,
-  repo: TodoApp.Repo,
-  user_mod: TodoApp.Accounts.User
+  token_salt: "QyWn9OfD"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

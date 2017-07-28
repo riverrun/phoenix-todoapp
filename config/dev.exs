@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
-config :todo_app, TodoApp.Web.Endpoint,
+config :todo_app, TodoAppWeb.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,

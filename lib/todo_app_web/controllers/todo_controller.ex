@@ -1,11 +1,11 @@
-defmodule TodoApp.Web.TodoController do
-  use TodoApp.Web, :controller
+defmodule TodoAppWeb.TodoController do
+  use TodoAppWeb, :controller
 
-  import TodoApp.Web.Authorize
+  import TodoAppWeb.Authorize
   alias TodoApp.Jobs
   alias TodoApp.Jobs.Todo
 
-  action_fallback TodoApp.Web.FallbackController
+  action_fallback TodoAppWeb.FallbackController
 
   def action(conn, _), do: auth_action_id(conn, __MODULE__)
 

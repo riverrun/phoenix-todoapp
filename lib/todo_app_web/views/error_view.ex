@@ -1,5 +1,5 @@
-defmodule TodoApp.Web.ErrorView do
-  use TodoApp.Web, :view
+defmodule TodoAppWeb.ErrorView do
+  use TodoAppWeb, :view
 
   def render("404.json", _assigns) do
     %{errors: %{detail: "Page not found"}}

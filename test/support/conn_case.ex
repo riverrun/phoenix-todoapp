@@ -1,4 +1,4 @@
-defmodule TodoApp.Web.ConnCase do
+defmodule TodoAppWeb.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,10 +19,10 @@ defmodule TodoApp.Web.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      import TodoApp.Web.Router.Helpers
+      import TodoAppWeb.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint TodoApp.Web.Endpoint
+      @endpoint TodoAppWeb.Endpoint
     end
   end
 

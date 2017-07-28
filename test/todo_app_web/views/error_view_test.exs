@@ -1,21 +1,21 @@
-defmodule TodoApp.Web.ErrorViewTest do
-  use TodoApp.Web.ConnCase, async: true
+defmodule TodoAppWeb.ErrorViewTest do
+  use TodoAppWeb.ConnCase, async: true
 
   # Bring render/3 and render_to_string/3 for testing custom views
   import Phoenix.View
 
   test "renders 404.json" do
-    assert render(TodoApp.Web.ErrorView, "404.json", []) ==
+    assert render(TodoAppWeb.ErrorView, "404.json", []) ==
            %{errors: %{detail: "Page not found"}}
   end
 
   test "render 500.json" do
-    assert render(TodoApp.Web.ErrorView, "500.json", []) ==
+    assert render(TodoAppWeb.ErrorView, "500.json", []) ==
            %{errors: %{detail: "Internal server error"}}
   end
 
   test "render any other" do
-    assert render(TodoApp.Web.ErrorView, "505.json", []) ==
+    assert render(TodoAppWeb.ErrorView, "505.json", []) ==
            %{errors: %{detail: "Internal server error"}}
   end
 end

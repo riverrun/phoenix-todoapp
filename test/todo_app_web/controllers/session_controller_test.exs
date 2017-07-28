@@ -1,7 +1,7 @@
-defmodule TodoApp.Web.SessionControllerTest do
-  use TodoApp.Web.ConnCase
+defmodule TodoAppWeb.SessionControllerTest do
+  use TodoAppWeb.ConnCase
 
-  import TodoApp.Web.AuthCase
+  import TodoAppWeb.AuthCase
 
   @create_attrs %{email: "robin@mail.com", password: "mangoes&g0oseberries"}
   @invalid_attrs %{email: "robin@mail.com", password: "maaaangoes&g00zeberries"}

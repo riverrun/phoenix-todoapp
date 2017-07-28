@@ -1,4 +1,4 @@
-defmodule TodoApp.Web.Authorize do
+defmodule TodoAppWeb.Authorize do
 
   import Plug.Conn
   import Phoenix.Controller
@@ -46,7 +46,7 @@ defmodule TodoApp.Web.Authorize do
 
   def error(conn, status, code) do
     put_status(conn, status)
-    |> render(TodoApp.Web.AuthView, "#{code}.json", [])
+    |> render(TodoAppWeb.AuthView, "#{code}.json", [])
     |> halt
   end
 end

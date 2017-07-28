@@ -1,4 +1,4 @@
-defmodule TodoApp.Web.ChannelCase do
+defmodule TodoAppWeb.ChannelCase do
   @moduledoc """
   This module defines the test case to be used by
   channel tests.
@@ -21,7 +21,7 @@ defmodule TodoApp.Web.ChannelCase do
       use Phoenix.ChannelTest
 
       # The default endpoint for testing
-      @endpoint TodoApp.Web.Endpoint
+      @endpoint TodoAppWeb.Endpoint
     end
   end
 
