@@ -12,4 +12,9 @@ defmodule TodoApp.Application do
     opts = [strategy: :one_for_one, name: TodoApp.Supervisor]
     Supervisor.start_link(children, opts)
   end
+
+  def config_change(changed, _new, removed) do
+    TodoAppWeb.Endpoint.config_change(changed, removed)
+    :ok
+  end
 end

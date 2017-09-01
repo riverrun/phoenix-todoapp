@@ -2,6 +2,7 @@ defmodule TodoAppWeb.UserController do
   use TodoAppWeb, :controller
 
   import TodoAppWeb.Authorize
+  alias Phauxth.Log
   alias TodoApp.{Accounts, Accounts.User}
 
   action_fallback TodoAppWeb.FallbackController
@@ -15,6 +16,7 @@ defmodule TodoAppWeb.UserController do
   end
   def create(conn, %{"user" => user_params}) do
     with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
+      Log.info(%Log{user: user.id, message: "user created"})
       conn
       |> put_status(:created)
       |> put_resp_header("location", user_path(conn, :show, user))
