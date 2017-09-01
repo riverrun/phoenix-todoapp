@@ -4,9 +4,9 @@ defmodule TodoAppWeb.SessionController do
   import TodoAppWeb.Authorize
 
   def create(conn, %{"session" => session_params}) do
-    case Phauxth.Login.verify(session_params, TodoApp.Accounts) do
+    case Phauxth.Login.verify(session_params, TodoApp.Accounts, crypto: Comeonin.Argon2) do
       {:ok, user} ->
-        token = Phoenix.Token.sign(TodoAppWeb.Endpoint, "user auth", user.id)
+        token = Phauxth.Token.sign(TodoAppWeb.Endpoint, user.id)
         render(conn, TodoAppWeb.SessionView, "info.json", %{info: token})
       {:error, _message} -> error(conn, :unauthorized, 401)
     end
