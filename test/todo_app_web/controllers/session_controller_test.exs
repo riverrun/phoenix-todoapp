@@ -8,13 +8,12 @@ defmodule TodoAppWeb.SessionControllerTest do
 
   setup %{conn: conn} do
     user = add_user("robin@mail.com")
-    conn = conn |> add_token_conn(user)
     {:ok, %{conn: conn, user: user}}
   end
 
   test "login succeeds", %{conn: conn} do
     conn = post conn, session_path(conn, :create), session: @create_attrs
-    assert json_response(conn, 200)["info"]["detail"]
+    assert json_response(conn, 200)["access_token"]
   end
 
   test "login fails", %{conn: conn} do

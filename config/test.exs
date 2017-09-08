@@ -4,7 +4,8 @@ use Mix.Config
 # you can enable the server option below.
 config :todo_app, TodoAppWeb.Endpoint,
   http: [port: 4001],
-  server: false
+  #server: false
+  server: true
 
 # Print only warnings and errors during test
 config :logger, level: :warn

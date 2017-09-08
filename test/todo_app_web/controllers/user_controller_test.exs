@@ -9,7 +9,6 @@ defmodule TodoAppWeb.UserControllerTest do
   @invalid_attrs %{"email" => nil}
 
   setup %{conn: conn} = config do
-
     if email = config[:login] do
       user = add_user(email)
       other = add_user("tony@mail.com")
