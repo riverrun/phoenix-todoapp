@@ -1,10 +1,8 @@
-Code.require_file "support/integration_helper.exs", __DIR__
-
 defmodule TodoAppWeb.TodoIntegrationTest do
   use TodoAppWeb.IntegrationCase
 
+  import WuffWuff.Api
   import TodoAppWeb.AuthCase
-  import TodoAppWeb.IntegrationHelper
 
   setup do
     user = add_user("ted@mail.com")
@@ -17,7 +15,7 @@ defmodule TodoAppWeb.TodoIntegrationTest do
     todo = %{body: "Need to find the meaning of life",
       notes: "Have to finish by next Wednesday",
       title: "Search for meaning"}
-    %{"data" => data} = auth_post("/users/#{id}/todos", %{todo: todo}, token).body
+    %{"data" => data} = post!("/users/#{id}/todos", %{todo: todo}, ~a(#{token})).body
     assert data["body"] =~ "meaning of life"
     assert data["notes"] =~ "finish by next Wednesday"
   end

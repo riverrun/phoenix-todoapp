@@ -3,8 +3,8 @@ defmodule TodoAppWeb.SessionControllerTest do
 
   import TodoAppWeb.AuthCase
 
-  @create_attrs %{email: "robin@mail.com", password: "mangoes&g0oseberries"}
-  @invalid_attrs %{email: "robin@mail.com", password: "maaaangoes&g00zeberries"}
+  @create_attrs %{email: "robin@mail.com", password: "reallyHard2gue$$"}
+  @invalid_attrs %{email: "robin@mail.com", password: "cannotGue$$it"}
 
   setup %{conn: conn} do
     user = add_user("robin@mail.com")

@@ -26,4 +26,4 @@
   "ranch": {:hex, :ranch, "1.3.2", "e4965a144dc9fbe70e5c077c65e73c57165416a901bd02ea899cfd95aa890986", [], [], "hexpm"},
   "ssl_verify_fun": {:hex, :ssl_verify_fun, "1.1.1", "28a4d65b7f59893bc2c7de786dec1e1555bd742d336043fe644ae956c3497fbe", [], [], "hexpm"},
   "unicode_util_compat": {:hex, :unicode_util_compat, "0.3.1", "a1f612a7b512638634a603c8f401892afbf99b8ce93a45041f8aaca99cadb85e", [], [], "hexpm"},
-  "wuff_wuff": {:git, "https://github.com/riverrun/wuff_wuff.git", "73f524af538f7c54cd4e796af01c83572572e1c3", []}}
+  "wuff_wuff": {:git, "https://github.com/riverrun/wuff_wuff.git", "bd2983409677afea27d75b1dfbb89c457572c342", []}}

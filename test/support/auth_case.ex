@@ -4,7 +4,7 @@ defmodule TodoAppWeb.AuthCase do
   alias TodoApp.Accounts
 
   def add_user(email) do
-    user = %{email: email, password: "mangoes&g0oseberries"}
+    user = %{email: email, password: "reallyHard2gue$$"}
     {:ok, user} = Accounts.create_user(user)
     user
   end
