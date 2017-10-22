@@ -30,8 +30,9 @@ defmodule TodoApp.Mixfile do
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
-      {:phauxth, "~> 1.1"},
-      {:argon2_elixir, "~> 1.2"},
+      {:phauxth, git: "https://github.com/riverrun/phauxth.git", branch: "new_sessions"},
+      #{:phauxth, "~> 1.2"},
+      {:bcrypt_elixir, "~> 1.0"},
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:wuff_wuff, git: "https://github.com/riverrun/wuff_wuff.git"}
