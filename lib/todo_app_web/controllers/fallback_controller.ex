@@ -9,12 +9,14 @@ defmodule TodoAppWeb.FallbackController do
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:unprocessable_entity)
-    |> render(TodoAppWeb.ChangesetView, "error.json", changeset: changeset)
+    |> put_view(TodoAppWeb.ChangesetView)
+    |> render("error.json", changeset: changeset)
   end
 
   def call(conn, {:error, :not_found}) do
     conn
     |> put_status(:not_found)
-    |> render(TodoAppWeb.ErrorView, :"404")
+    |> put_view(TodoAppWeb.ErrorView)
+    |> render(:"404")
   end
 end

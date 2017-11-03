@@ -13,7 +13,7 @@ defmodule TodoAppWeb.SessionController do
     case Login.verify(params, Accounts) do
       {:ok, user} ->
         token = Phauxth.Token.sign(conn, user.id)
-        render(conn, TodoAppWeb.SessionView, "info.json", %{info: token})
+        render(conn, "info.json", %{info: token})
       {:error, _message} ->
         error(conn, :unauthorized, 401)
     end
