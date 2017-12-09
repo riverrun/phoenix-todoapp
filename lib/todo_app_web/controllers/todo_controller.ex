@@ -5,7 +5,7 @@ defmodule TodoAppWeb.TodoController do
   alias TodoApp.Jobs
   alias TodoApp.Jobs.Todo
 
-  action_fallback TodoAppWeb.FallbackController
+  action_fallback(TodoAppWeb.FallbackController)
 
   def action(conn, _), do: auth_action_id(conn, __MODULE__)
 
@@ -38,6 +38,7 @@ defmodule TodoAppWeb.TodoController do
 
   def delete(conn, %{"id" => id}, user) do
     todo = Jobs.get_todo(user, id)
+
     with {:ok, %Todo{}} <- Jobs.delete_todo(todo) do
       send_resp(conn, :no_content, "")
     end

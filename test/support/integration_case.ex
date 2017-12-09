@@ -11,6 +11,7 @@ defmodule TodoAppWeb.IntegrationCase do
 
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(TodoApp.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(TodoApp.Repo, {:shared, self()})
     end

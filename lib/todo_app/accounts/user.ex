@@ -4,10 +4,10 @@ defmodule TodoApp.Accounts.User do
   alias TodoApp.Accounts.User
 
   schema "users" do
-    field :email, :string
-    field :password, :string, virtual: true
-    field :password_hash, :string
-    has_many :todos, TodoApp.Jobs.Todo
+    field(:email, :string)
+    field(:password, :string, virtual: true)
+    field(:password_hash, :string)
+    has_many(:todos, TodoApp.Jobs.Todo)
 
     timestamps()
   end
@@ -48,14 +48,15 @@ defmodule TodoApp.Accounts.User do
   end
 
   # If you are using Argon2 or Pbkdf2, change Bcrypt to Argon2 or Pbkdf2
-  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes:
-      %{password: password}} = changeset) do
+  defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
     change(changeset, Comeonin.Bcrypt.add_hash(password))
   end
+
   defp put_pass_hash(changeset), do: changeset
 
   defp strong_password?(password) when byte_size(password) > 7 do
     {:ok, password}
   end
+
   defp strong_password?(_), do: {:error, "The password is too short"}
 end

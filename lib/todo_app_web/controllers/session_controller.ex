@@ -5,7 +5,7 @@ defmodule TodoAppWeb.SessionController do
   alias TodoApp.Accounts
   alias Phauxth.Login
 
-  plug :guest_check when action in [:create]
+  plug(:guest_check when action in [:create])
 
   # If you are using Argon2 or Pbkdf2, add crypto: Comeonin.Argon2
   # or crypto: Comeonin.Pbkdf2 to Login.verify (after Accounts)
@@ -14,6 +14,7 @@ defmodule TodoAppWeb.SessionController do
       {:ok, user} ->
         token = Phauxth.Token.sign(conn, user.id)
         render(conn, "info.json", %{info: token})
+
       {:error, _message} ->
         error(conn, :unauthorized, 401)
     end

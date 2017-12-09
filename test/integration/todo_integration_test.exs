@@ -5,9 +5,11 @@ defmodule TodoAppWeb.TodoIntegrationTest do
   import TodoAppWeb.AuthCase
   alias TodoApp.Jobs
 
-  @todo_attrs %{body: "Need to find the meaning of life",
+  @todo_attrs %{
+    body: "Need to find the meaning of life",
     notes: "Have to finish by next Wednesday",
-    title: "Search for meaning"}
+    title: "Search for meaning"
+  }
 
   setup do
     user = add_user("ted@mail.com")
@@ -36,8 +38,10 @@ defmodule TodoAppWeb.TodoIntegrationTest do
 
   test "cannot view other todo", %{other: other, token: token} do
     todo = add_todo(other, @todo_attrs)
-    %{"errors" => %{"detail" => message}} = get!("/users/#{other.id}/todos/#{todo.id}", ~a(#{token})).body
+
+    %{"errors" => %{"detail" => message}} =
+      get!("/users/#{other.id}/todos/#{todo.id}", ~a(#{token})).body
+
     assert message =~ "not authorized to view this resource"
   end
-
 end

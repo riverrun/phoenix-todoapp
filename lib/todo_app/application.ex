@@ -6,7 +6,7 @@ defmodule TodoApp.Application do
 
     children = [
       supervisor(TodoApp.Repo, []),
-      supervisor(TodoAppWeb.Endpoint, []),
+      supervisor(TodoAppWeb.Endpoint, [])
     ]
 
     opts = [strategy: :one_for_one, name: TodoApp.Supervisor]

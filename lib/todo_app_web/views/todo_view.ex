@@ -11,10 +11,6 @@ defmodule TodoAppWeb.TodoView do
   end
 
   def render("todo.json", %{todo: todo}) do
-    %{id: todo.id,
-      title: todo.title,
-      body: todo.body,
-      notes: todo.notes,
-      user_id: todo.user_id}
+    %{id: todo.id, title: todo.title, body: todo.body, notes: todo.notes, user_id: todo.user_id}
   end
 end

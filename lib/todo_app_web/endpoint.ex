@@ -1,33 +1,41 @@
 defmodule TodoAppWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :todo_app
 
-  socket "/socket", TodoAppWeb.UserSocket
+  socket("/socket", TodoAppWeb.UserSocket)
 
-  plug Plug.Static,
-    at: "/", from: :todo_app, gzip: false,
+  plug(
+    Plug.Static,
+    at: "/",
+    from: :todo_app,
+    gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
+  )
 
   if code_reloading? do
-    plug Phoenix.CodeReloader
+    plug(Phoenix.CodeReloader)
   end
 
-  plug Plug.RequestId
-  plug Plug.Logger
+  plug(Plug.RequestId)
+  plug(Plug.Logger)
 
-  plug Plug.Parsers,
+  plug(
+    Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
     json_decoder: Poison
+  )
 
-  plug Plug.MethodOverride
-  plug Plug.Head
+  plug(Plug.MethodOverride)
+  plug(Plug.Head)
 
-  plug Plug.Session,
+  plug(
+    Plug.Session,
     store: :cookie,
     key: "_todo_app_key",
     signing_salt: "ns9KtK+T"
+  )
 
-  plug TodoAppWeb.Router
+  plug(TodoAppWeb.Router)
 
   @doc """
   Dynamically loads configuration from the system environment

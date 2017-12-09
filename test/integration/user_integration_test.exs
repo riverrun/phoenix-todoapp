@@ -39,5 +39,4 @@ defmodule TodoAppWeb.UserIntegrationTest do
     %{"errors" => %{"detail" => message}} = delete!("/users/#{id}", ~a(#{token})).body
     assert message =~ "are not authorized"
   end
-
 end

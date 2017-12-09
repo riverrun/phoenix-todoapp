@@ -19,13 +19,13 @@ defmodule TodoApp.Accounts do
   def create_user(attrs) do
     %User{}
     |> User.create_changeset(attrs)
-    |> Repo.insert
+    |> Repo.insert()
   end
 
   def update_user(%User{} = user, attrs) do
     user
     |> User.changeset(attrs)
-    |> Repo.update
+    |> Repo.update()
   end
 
   def delete_user(%User{} = user) do

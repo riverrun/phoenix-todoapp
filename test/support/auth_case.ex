@@ -11,6 +11,7 @@ defmodule TodoAppWeb.AuthCase do
 
   def add_token_conn(conn, user) do
     user_token = Phauxth.Token.sign(TodoAppWeb.Endpoint, user.id)
+
     conn
     |> put_req_header("accept", "application/json")
     |> put_req_header("authorization", user_token)

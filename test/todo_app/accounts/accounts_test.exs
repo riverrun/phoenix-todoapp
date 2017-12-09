@@ -55,5 +55,4 @@ defmodule TodoApp.AccountsTest do
     user = fixture(:user)
     assert %Ecto.Changeset{} = Accounts.change_user(user)
   end
-
 end

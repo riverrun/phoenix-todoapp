@@ -5,9 +5,11 @@ defmodule TodoApp.JobsTest do
   alias TodoApp.Jobs
   alias TodoApp.Jobs.Todo
 
-  @create_attrs %{body: "Need to find the meaning of life",
-                 notes: "Have to finish by next Wednesday",
-                 title: "Search for meaning"}
+  @create_attrs %{
+    body: "Need to find the meaning of life",
+    notes: "Have to finish by next Wednesday",
+    title: "Search for meaning"
+  }
   @update_attrs %{notes: "Done"}
   @invalid_attrs %{body: nil, title: nil}
 
