@@ -1,10 +1,6 @@
 defmodule TodoApp.Jobs do
-  @moduledoc """
-  The boundary for the Jobs system.
-  """
-
   import Ecto
-  import Ecto.{Query, Changeset}, warn: false
+  import Ecto.Query, warn: false
   alias TodoApp.Repo
   alias TodoApp.Jobs.Todo
 
@@ -27,13 +23,13 @@ defmodule TodoApp.Jobs do
   def create_todo(user, attrs \\ %{}) do
     user
     |> build_assoc(:todos)
-    |> todo_changeset(attrs)
+    |> Todo.todo_changeset(attrs)
     |> Repo.insert()
   end
 
   def update_todo(%Todo{} = todo, attrs) do
     todo
-    |> todo_changeset(attrs)
+    |> Todo.todo_changeset(attrs)
     |> Repo.update()
   end
 
@@ -42,12 +38,6 @@ defmodule TodoApp.Jobs do
   end
 
   def change_todo(%Todo{} = todo) do
-    todo_changeset(todo, %{})
-  end
-
-  defp todo_changeset(%Todo{} = todo, attrs) do
-    todo
-    |> cast(attrs, [:title, :body, :notes])
-    |> validate_required([:title, :body])
+    Todo.todo_changeset(todo, %{})
   end
 end
