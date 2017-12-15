@@ -8,63 +8,50 @@ defmodule TodoApp.AccountsTest do
   @update_attrs %{email: "frederick@example.com"}
   @invalid_attrs %{email: nil}
 
-  def fixture(:user, attrs \\ @create_attrs) do
-    {:ok, user} = Accounts.create_user(attrs)
-    user
-  end
+  describe "users" do
+    setup [:create_user]
 
-  describe "index" do
-    test "list_users/1 returns all users" do
-      user = fixture(:user)
+    test "list_users returns all users", %{user: user} do
       assert Accounts.list_users() == [user]
     end
-  end
 
-  describe "show user" do
-    test "get returns the user with given id" do
-      user = fixture(:user)
+    test "get returns the user with given id", %{user: user} do
       assert Accounts.get(user.id) == user
     end
-  end
 
-  describe "create user" do
-    test "create_user/1 with valid data creates a user" do
+    test "create_user with valid data creates a user" do
       assert {:ok, %User{} = user} = Accounts.create_user(@create_attrs)
       assert user.email == "fred@example.com"
     end
 
-    test "create_user/1 with invalid data returns error changeset" do
+    test "create_user with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Accounts.create_user(@invalid_attrs)
     end
-  end
 
-  describe "update user" do
-    test "update_user/2 with valid data updates the user" do
-      user = fixture(:user)
+    test "update_user with valid data updates the user", %{user: user} do
       assert {:ok, user} = Accounts.update_user(user, @update_attrs)
       assert %User{} = user
       assert user.email == "frederick@example.com"
     end
 
-    test "update_user/2 with invalid data returns error changeset" do
-      user = fixture(:user)
+    test "update_user with invalid data returns error changeset", %{user: user} do
       assert {:error, %Ecto.Changeset{}} = Accounts.update_user(user, @invalid_attrs)
       assert user == Accounts.get(user.id)
     end
-  end
 
-  describe "delete user" do
-    test "delete_user/1 deletes the user" do
-      user = fixture(:user)
+    test "delete_user deletes the user", %{user: user} do
       assert {:ok, %User{}} = Accounts.delete_user(user)
       refute Accounts.get(user.id)
     end
-  end
 
-  describe "change user changeset" do
-    test "change_user/1 returns a user changeset" do
-      user = fixture(:user)
+    test "change_user returns a user changeset", %{user: user} do
       assert %Ecto.Changeset{} = Accounts.change_user(user)
     end
+  end
+
+  defp create_user(_) do
+    attrs = %{email: "brian@example.com", password: "reallyHard2gue$$"}
+    {:ok, user} = Accounts.create_user(attrs)
+    {:ok, %{user: user}}
   end
 end

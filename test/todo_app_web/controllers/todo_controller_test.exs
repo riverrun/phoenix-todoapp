@@ -31,9 +31,15 @@ defmodule TodoAppWeb.TodoControllerTest do
   end
 
   describe "index" do
-    test "lists all entries on index", %{conn: conn, user: user} do
+    test "lists all entries on index", %{conn: conn, user: user, todo: todo} do
       conn = get(conn, user_todo_path(conn, :index, user))
-      assert json_response(conn, 200)["data"] |> length == 1
+      assert json_response(conn, 200)["data"] == [%{
+        "id" => todo.id,
+        "user_id" => todo.user_id,
+        "title" => todo.title,
+        "notes" => todo.notes,
+        "body" => todo.body
+      }]
     end
   end
 
