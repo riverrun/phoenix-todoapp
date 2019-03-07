@@ -1,6 +1,8 @@
 defmodule TodoApp.Jobs.Todo do
   use Ecto.Schema
+
   import Ecto.Changeset
+
   alias TodoApp.Jobs.Todo
 
   schema "todos" do

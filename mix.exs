@@ -1,11 +1,11 @@
-defmodule TodoApp.Mixfile do
+defmodule TodoApp.MixProject do
   use Mix.Project
 
   def project do
     [
       app: :todo_app,
-      version: "0.0.1",
-      elixir: "~> 1.4",
+      version: "2.1.0",
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -26,15 +26,16 @@ defmodule TodoApp.Mixfile do
 
   defp deps do
     [
-      {:phoenix, "~> 1.3.0"},
-      {:phoenix_pubsub, "~> 1.0"},
-      {:phoenix_ecto, "~> 3.2"},
+      {:phoenix, "~> 1.4.0"},
+      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix_ecto, "~> 4.0"},
+      {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
-      {:phauxth, "~> 1.2"},
-      {:bcrypt_elixir, "~> 1.0"},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"},
-      {:wuff_wuff, git: "https://github.com/riverrun/wuff_wuff.git"}
+      {:jason, "~> 1.0"},
+      {:phauxth, "~> 2.1.0"},
+      {:argon2_elixir, "~> 2.0"},
+      {:plug_cowboy, "~> 2.0"}
     ]
   end
 

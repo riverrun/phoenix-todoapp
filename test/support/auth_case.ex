@@ -1,7 +1,7 @@
 defmodule TodoAppWeb.AuthCase do
   use Phoenix.ConnTest
-
-  alias TodoApp.Accounts
+  alias TodoApp.{Accounts, Sessions}
+  alias TodoAppWeb.Auth.Token
 
   def add_user(email) do
     user = %{email: email, password: "reallyHard2gue$$"}
@@ -10,14 +10,11 @@ defmodule TodoAppWeb.AuthCase do
   end
 
   def add_token_conn(conn, user) do
-    user_token = Phauxth.Token.sign(TodoAppWeb.Endpoint, user.id)
+    {:ok, %{id: session_id}} = Sessions.create_session(%{user_id: user.id})
+    user_token = Token.sign(%{"session_id" => session_id})
 
     conn
     |> put_req_header("accept", "application/json")
     |> put_req_header("authorization", user_token)
-  end
-
-  def gen_key(email) do
-    Phauxth.Token.sign(TodoAppWeb.Endpoint, %{"email" => email})
   end
 end

@@ -1,28 +1,31 @@
 defmodule TodoApp.Accounts.User do
   use Ecto.Schema
+
   import Ecto.Changeset
-  alias TodoApp.Accounts.User
+
+  alias TodoApp.{Sessions.Session, Jobs.Todo}
 
   schema "users" do
     field(:email, :string)
     field(:password, :string, virtual: true)
     field(:password_hash, :string)
-    has_many(:todos, TodoApp.Jobs.Todo)
+    has_many(:sessions, Session, on_delete: :delete_all)
+    has_many(:todos, Todo, on_delete: :delete_all)
 
     timestamps()
   end
 
-  def changeset(%User{} = user, attrs) do
+  def changeset(%__MODULE__{} = user, attrs) do
     user
     |> cast(attrs, [:email])
     |> validate_required([:email])
     |> unique_email
   end
 
-  def create_changeset(%User{} = user, attrs) do
+  def create_changeset(%__MODULE__{} = user, attrs) do
     user
     |> cast(attrs, [:email, :password])
-    |> validate_required([:email])
+    |> validate_required([:email, :password])
     |> unique_email
     |> validate_password(:password)
     |> put_pass_hash
@@ -47,9 +50,9 @@ defmodule TodoApp.Accounts.User do
     end)
   end
 
-  # If you are using Argon2 or Pbkdf2, change Bcrypt to Argon2 or Pbkdf2
+  # If you are using Bcrypt or Pbkdf2, change Argon2 to Bcrypt or Pbkdf2
   defp put_pass_hash(%Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset) do
-    change(changeset, Comeonin.Bcrypt.add_hash(password))
+    change(changeset, Argon2.add_hash(password))
   end
 
   defp put_pass_hash(changeset), do: changeset

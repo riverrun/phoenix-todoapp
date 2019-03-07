@@ -1,11 +1,11 @@
-## This file is a PO Template file.
+## This is a PO Template file.
 ##
 ## `msgid`s here are often extracted from source code.
 ## Add new translations manually only if they're dynamic
 ## translations that can't be statically extracted.
 ##
 ## Run `mix gettext.extract` to bring this file up to
-## date. Leave `msgstr`s empty as changing them here as no
+## date. Leave `msgstr`s empty as changing them here has no
 ## effect: edit them in PO (`.po`) files instead.
 
 ## From Ecto.Changeset.cast/4
@@ -18,6 +18,10 @@ msgstr ""
 
 ## From Ecto.Changeset.put_change/3
 msgid "is invalid"
+msgstr ""
+
+## From Ecto.Changeset.validate_acceptance/3
+msgid "must be accepted"
 msgstr ""
 
 ## From Ecto.Changeset.validate_format/3

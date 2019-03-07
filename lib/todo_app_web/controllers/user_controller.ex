@@ -2,14 +2,15 @@ defmodule TodoAppWeb.UserController do
   use TodoAppWeb, :controller
 
   import TodoAppWeb.Authorize
+
   alias Phauxth.Log
   alias TodoApp.Accounts
 
-  action_fallback(TodoAppWeb.FallbackController)
+  action_fallback TodoAppWeb.FallbackController
 
   # the following plugs are defined in the controllers/authorize.ex file
-  plug(:user_check when action in [:index, :show])
-  plug(:id_check when action in [:update, :delete])
+  plug :user_check when action in [:index, :show]
+  plug :id_check when action in [:update, :delete]
 
   def index(conn, _) do
     users = Accounts.list_users()
@@ -22,13 +23,13 @@ defmodule TodoAppWeb.UserController do
 
       conn
       |> put_status(:created)
-      |> put_resp_header("location", user_path(conn, :show, user))
+      |> put_resp_header("location", Routes.user_path(conn, :show, user))
       |> render("show.json", user: user)
     end
   end
 
   def show(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
-    user = (id == to_string(user.id) and user) || Accounts.get(id)
+    user = if id == to_string(user.id), do: user, else: Accounts.get_user(id)
     render(conn, "show.json", user: user)
   end
 

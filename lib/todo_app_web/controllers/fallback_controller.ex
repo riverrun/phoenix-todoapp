@@ -4,6 +4,7 @@ defmodule TodoAppWeb.FallbackController do
 
   See `Phoenix.Controller.action_fallback/1` for more details.
   """
+
   use TodoAppWeb, :controller
 
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do

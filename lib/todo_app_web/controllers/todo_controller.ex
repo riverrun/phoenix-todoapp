@@ -5,7 +5,7 @@ defmodule TodoAppWeb.TodoController do
   alias TodoApp.Jobs
   alias TodoApp.Jobs.Todo
 
-  action_fallback(TodoAppWeb.FallbackController)
+  action_fallback TodoAppWeb.FallbackController
 
   def action(conn, _), do: auth_action_id(conn, __MODULE__)
 
@@ -18,7 +18,7 @@ defmodule TodoAppWeb.TodoController do
     with {:ok, %Todo{} = todo} <- Jobs.create_todo(user, todo_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", user_todo_path(conn, :show, user.id, todo))
+      |> put_resp_header("location", Routes.user_todo_path(conn, :show, user.id, todo))
       |> render("show.json", todo: todo)
     end
   end
