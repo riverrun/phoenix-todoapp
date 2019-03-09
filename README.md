@@ -1,19 +1,52 @@
 # TodoApp
 
-To start your Phoenix server:
+An example todo api using [Phauxth authentication](https://github.com/riverrun/phauxth)
+with the [Phoenix web framework](http://www.phoenixframework.org/).
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server`
+## Getting started
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+1. Install dependencies:
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+```
+mix deps.get
+```
 
-## Learn more
+2. Setup database:
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+```
+mix ecto.setup
+```
+
+3. Start the app:
+
+```
+iex -S mix phx.server
+```
+
+### Using Curl
+
+With Curl, the above example would be:
+
+```
+curl --request POST \
+  --url http://localhost:4000/api/sessions \
+  --header 'content-type: application/json' \
+  --data '{
+	"session": {
+		"email": "jane.doe@example.com",
+		"password": "password"
+	}
+}'
+```
+
+The response will be in the form `{"access_token": token}`
+
+Then you can access the /users route by running this command
+(replace token with the value of the token):
+
+```
+curl --request GET \
+  --url http://localhost:4000/api/users \
+  --header 'content-type: application/json' \
+  --header 'Authorization: token' \
+```

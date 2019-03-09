@@ -35,7 +35,8 @@ defmodule TodoApp.MixProject do
       {:jason, "~> 1.0"},
       {:phauxth, "~> 2.1.0"},
       {:argon2_elixir, "~> 2.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:tesla, "~> 1.2.1"}
     ]
   end
 
