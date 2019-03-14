@@ -5,12 +5,22 @@ defmodule TodoApp.Accounts.User do
 
   alias TodoApp.{Sessions.Session, Jobs.Todo}
 
+  @type t :: %__MODULE__{
+          id: integer,
+          email: String.t(),
+          password_hash: String.t(),
+          sessions: %Ecto.Association.NotLoaded{} | [Session.t()],
+          todos: %Ecto.Association.NotLoaded{} | [Todo.t()],
+          inserted_at: DateTime.t(),
+          updated_at: DateTime.t()
+        }
+
   schema "users" do
-    field(:email, :string)
-    field(:password, :string, virtual: true)
-    field(:password_hash, :string)
-    has_many(:sessions, Session, on_delete: :delete_all)
-    has_many(:todos, Todo, on_delete: :delete_all)
+    field :email, :string
+    field :password, :string, virtual: true
+    field :password_hash, :string
+    has_many :sessions, Session, on_delete: :delete_all
+    has_many :todos, Todo, on_delete: :delete_all
 
     timestamps()
   end

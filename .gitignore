@@ -27,6 +27,10 @@ todo_app-*.tar
 # this depending on your deployment strategy.
 /priv/static/
 
+# Ignore files created by dialyzer
+/priv/plts/*.plt
+/priv/plts/*.plt.hash
+
 # Files matching config/*.secret.exs pattern contain sensitive
 # data and you should not commit them into version control.
 #

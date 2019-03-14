@@ -2,8 +2,8 @@ defmodule TodoApp.JobsTest do
   use TodoApp.DataCase
 
   import TodoAppWeb.AuthCase
-  alias TodoApp.Jobs
-  alias TodoApp.Jobs.Todo
+
+  alias TodoApp.{Jobs, Jobs.Todo}
 
   @create_attrs %{
     body: "Need to find the meaning of life",
@@ -16,8 +16,8 @@ defmodule TodoApp.JobsTest do
   describe "todos" do
     setup [:create_user, :create_todo]
 
-    test "list_todos returns all todos", %{todo: todo} do
-      assert Jobs.list_todos() == [todo]
+    test "list_todos returns all todos", %{todo: todo, user: user} do
+      assert Jobs.list_todos(user) == [todo]
     end
 
     test "get_todo returns the todo with given id", %{todo: todo} do
