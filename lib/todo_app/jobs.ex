@@ -25,7 +25,7 @@ defmodule TodoApp.Jobs do
   def get_todo(id), do: Repo.get(Todo, id)
 
   @doc """
-  Gets a single valid todo.
+  Gets a single user's todo.
   """
   @spec get_todo(User.t(), integer) :: Todo.t() | nil
   def get_todo(user, id), do: Repo.get(assoc(user, :todos), id)
@@ -45,7 +45,7 @@ defmodule TodoApp.Jobs do
   def create_todo(user, attrs \\ %{}) do
     user
     |> build_assoc(:todos)
-    |> Todo.todo_changeset(attrs)
+    |> Todo.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -55,7 +55,7 @@ defmodule TodoApp.Jobs do
   @spec update_todo(Todo.t(), map) :: {:ok, Todo.t()} | changeset_error
   def update_todo(%Todo{} = todo, attrs) do
     todo
-    |> Todo.todo_changeset(attrs)
+    |> Todo.changeset(attrs)
     |> Repo.update()
   end
 
@@ -72,6 +72,6 @@ defmodule TodoApp.Jobs do
   """
   @spec change_todo(Todo.t()) :: Ecto.Changeset.t()
   def change_todo(%Todo{} = todo) do
-    Todo.todo_changeset(todo, %{})
+    Todo.changeset(todo, %{})
   end
 end

@@ -25,7 +25,7 @@ defmodule TodoApp.Jobs.Todo do
     timestamps()
   end
 
-  def todo_changeset(%Todo{} = todo, attrs) do
+  def changeset(%Todo{} = todo, attrs) do
     todo
     |> cast(attrs, [:title, :body, :notes])
     |> validate_required([:title, :body])
