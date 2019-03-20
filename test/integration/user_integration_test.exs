@@ -1,7 +1,7 @@
 defmodule TodoAppWeb.UserIntegrationTest do
   use TodoApp.DataCase
 
-  import TodoAppWeb.AuthCase
+  import TodoAppWeb.AuthTestHelpers
   import TodoAppWeb.IntegrationHelper
 
   setup do

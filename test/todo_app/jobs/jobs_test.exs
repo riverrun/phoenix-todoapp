@@ -1,7 +1,7 @@
 defmodule TodoApp.JobsTest do
   use TodoApp.DataCase
 
-  import TodoAppWeb.AuthCase
+  import TodoAppWeb.AuthTestHelpers
 
   alias TodoApp.{Jobs, Jobs.Todo}
 
@@ -16,12 +16,21 @@ defmodule TodoApp.JobsTest do
   describe "todos" do
     setup [:create_user, :create_todo]
 
-    test "list_todos returns all todos", %{todo: todo, user: user} do
+    test "list_todos returns all a user's todos", %{todo: todo, user: user} do
       assert Jobs.list_todos(user) == [todo]
     end
 
     test "get_todo returns the todo with given id", %{todo: todo} do
       assert Jobs.get_todo(todo.id) == todo
+    end
+
+    test "get_user_todo returns the todo with given id for correct user", %{
+      todo: todo,
+      user: user
+    } do
+      assert Jobs.get_user_todo(user, todo.id) == todo
+      other = add_user("igor@mail.com")
+      refute Jobs.get_user_todo(other, todo.id)
     end
 
     test "create_todo with valid data creates a todo", %{user: user} do

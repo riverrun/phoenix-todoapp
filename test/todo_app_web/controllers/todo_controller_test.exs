@@ -1,7 +1,7 @@
 defmodule TodoAppWeb.TodoControllerTest do
   use TodoAppWeb.ConnCase
 
-  import TodoAppWeb.AuthCase
+  import TodoAppWeb.AuthTestHelpers
   alias TodoApp.Jobs
 
   @create_attrs %{

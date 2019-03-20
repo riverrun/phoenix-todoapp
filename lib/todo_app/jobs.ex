@@ -19,21 +19,25 @@ defmodule TodoApp.Jobs do
   end
 
   @doc """
-  Gets a single valid todo.
+  Gets any todo.
   """
   @spec get_todo(integer) :: Todo.t() | nil
   def get_todo(id), do: Repo.get(Todo, id)
 
   @doc """
-  Gets a single user's todo.
+  Gets a certain user's todo.
   """
-  @spec get_todo(User.t(), integer) :: Todo.t() | nil
-  def get_todo(user, id), do: Repo.get(assoc(user, :todos), id)
+  @spec get_user_todo(User.t(), integer) :: Todo.t() | nil
+  def get_user_todo(%User{id: user_id}, id) do
+    Todo
+    |> where([t], t.id == ^id and t.user_id == ^user_id)
+    |> Repo.one()
+  end
 
   @doc """
   Gets a todo based on the params.
   """
-  @spec get_todo(map) :: Todo.t() | nil
+  @spec get_by(map) :: Todo.t() | nil
   def get_by(attrs) do
     Repo.get_by(Todo, attrs)
   end

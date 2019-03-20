@@ -9,8 +9,8 @@ defmodule TodoApp.Accounts.User do
           id: integer,
           email: String.t(),
           password_hash: String.t(),
-          sessions: %Ecto.Association.NotLoaded{} | [Session.t()],
-          todos: %Ecto.Association.NotLoaded{} | [Todo.t()],
+          sessions: [Session.t()] | %Ecto.Association.NotLoaded{},
+          todos: [Todo.t()] | %Ecto.Association.NotLoaded{},
           inserted_at: DateTime.t(),
           updated_at: DateTime.t()
         }

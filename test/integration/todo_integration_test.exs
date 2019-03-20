@@ -1,7 +1,7 @@
 defmodule TodoAppWeb.TodoIntegrationTest do
   use TodoApp.DataCase
 
-  import TodoAppWeb.AuthCase
+  import TodoAppWeb.AuthTestHelpers
   import TodoAppWeb.IntegrationHelper
   alias TodoApp.Jobs
 

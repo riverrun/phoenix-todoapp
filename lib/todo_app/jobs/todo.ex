@@ -11,7 +11,7 @@ defmodule TodoApp.Jobs.Todo do
           body: String.t(),
           notes: String.t(),
           user_id: integer,
-          user: %Ecto.Association.NotLoaded{} | User.t(),
+          user: User.t() | %Ecto.Association.NotLoaded{},
           inserted_at: DateTime.t(),
           updated_at: DateTime.t()
         }

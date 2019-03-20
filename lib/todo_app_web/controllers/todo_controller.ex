@@ -24,12 +24,12 @@ defmodule TodoAppWeb.TodoController do
   end
 
   def show(conn, %{"id" => id}, user) do
-    todo = Jobs.get_todo(user, id)
+    todo = Jobs.get_user_todo(user, id)
     render(conn, "show.json", todo: todo)
   end
 
   def update(conn, %{"id" => id, "todo" => todo_params}, user) do
-    todo = Jobs.get_todo(user, id)
+    todo = Jobs.get_user_todo(user, id)
 
     with {:ok, %Todo{} = todo} <- Jobs.update_todo(todo, todo_params) do
       render(conn, "show.json", todo: todo)
@@ -37,7 +37,7 @@ defmodule TodoAppWeb.TodoController do
   end
 
   def delete(conn, %{"id" => id}, user) do
-    todo = Jobs.get_todo(user, id)
+    todo = Jobs.get_user_todo(user, id)
 
     with {:ok, %Todo{}} <- Jobs.delete_todo(todo) do
       send_resp(conn, :no_content, "")

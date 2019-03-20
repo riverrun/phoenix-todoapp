@@ -1,4 +1,4 @@
-defmodule TodoAppWeb.AuthCase do
+defmodule TodoAppWeb.AuthTestHelpers do
   use Phoenix.ConnTest
 
   alias TodoApp.{Accounts, Sessions}
